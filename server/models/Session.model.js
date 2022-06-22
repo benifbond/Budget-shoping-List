@@ -4,6 +4,7 @@ const ObjectId = Schema.Types.ObjectId;
 const sessionSchema = new Schema(
   {
     user: { type: ObjectId, ref: "User" },
+    employer: { type: ObjectId, ref: "Employer" },
     createdAt: {
       type: Date,
       default: Date.now(),

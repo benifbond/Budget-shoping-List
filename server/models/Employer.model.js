@@ -2,23 +2,25 @@ const { Schema, model } = require("mongoose");
 const Job = require("./Job.model");
 
 // TODO: Please make sure you edit the user model to whatever makes sense in this case
-const userSchema = new Schema(
+const employerSchema = new Schema(
   {
     username: {
       type: String,
       unique: true,
     },
-
+    name: String,
+    email: { type: String, trim: true },
     password: String,
-    applyJobs: [{ type: Schema.Types.ObjectId, ref: Job }],
-    image: String,
+
+    createJobs: [{ type: Schema.Types.ObjectId, ref: Job }],
   },
+
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );
 
-const User = model("User", userSchema);
+const Employer = model("Employer", employerSchema);
 
-module.exports = User;
+module.exports = Employer;

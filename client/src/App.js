@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+// import { useContext } from "react";
+import { Route, Routes } from "react-router-dom";
+
+import Layout from "./components/Layout";
+import PrivateRoute from "./components/PrivateRoute";
+// import { BeersContextProvider } from "./contexts/BeersContext";
+
+// import BarDetailsPage from "./pages/BarDetailsPage";
+
+import ErrorPage from "./pages/ErrorPage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <BeersContextProvider>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<h1>Hello anonymous</h1>} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/beers" element={<PrivateRoute></PrivateRoute>} />
+        <Route
+          path="/bars/:barId"
+          element={<PrivateRoute>{/* <BarDetailsPage /> */}</PrivateRoute>}
+        />
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </Layout>
+    // </BeersContextProvider>
   );
 }
 

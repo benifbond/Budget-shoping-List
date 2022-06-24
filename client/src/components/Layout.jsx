@@ -41,6 +41,9 @@ const Layout = ({ children }) => {
               ></Anchor>
               Login
             </Anchor>
+            <Anchor component={NavLink} to="/employer/signup">
+              employer
+            </Anchor>
           </Box>
         </Header>
       }

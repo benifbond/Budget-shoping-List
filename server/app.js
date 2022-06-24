@@ -23,6 +23,9 @@ app.use("/api", allRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
+// const authRouteEmployers = require("./auth.routes.employer");
+// app.use("/auth", authRouteEmployers);
+/* GET home page */
 const allEmployeRoutes = require("./routes/auth.routes.employer");
 app.use("/api", allEmployeRoutes);
 

@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { login } from "../utils/helper";
+import { signup } from "../utils/helper";
 import { useState } from "react";
 import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 
-const LoginPage = () => {
+const UserSignup = () => {
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,9 +14,8 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newUser = { username: user, email, password };
-
-    const submitUser = await axios.post(`${BASE_API_URL}/auth/login`, newUser);
-    navigate("/profile");
+    const submitUser = await axios.post(`${BASE_API_URL}/auth/signup`, newUser);
+    console.log(submitUser.data);
   };
   function handleChange(e) {
     if (e.target.name === "username") {
@@ -57,10 +56,10 @@ const LoginPage = () => {
           required
           onChange={handleChange}
         />
-        <button>Login</button>
+        <button>submit</button>
       </form>
     </div>
   );
 };
 
-export default LoginPage;
+export default UserSignup;

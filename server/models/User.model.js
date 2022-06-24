@@ -12,6 +12,7 @@ const userSchema = new Schema(
     password: String,
     applyJobs: [{ type: Schema.Types.ObjectId, ref: Job }],
     image: String,
+    email: String,
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

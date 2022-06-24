@@ -9,52 +9,65 @@ import {
 import { useForm } from "@mantine/form";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../utils/helper";
+import { useState } from "react";
+import axios from "axios";
+import { BASE_API_URL } from "../utils/constants";
 
 const SignupPage = () => {
+  const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
-  const form = useForm({
-    initialValues: {
-      username: "",
-      password: "",
-    },
-  });
 
-  const createUser = async (newUser) => {
-    try {
-      const response = await signup(newUser);
-
-      if (response.status === "KO") {
-        throw new Error(response.message);
-      }
-
-      navigate("/login");
-    } catch (error) {
-      form.setErrors({ username: error.message });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let newUser = { username: user, email, password };
+    const submitUser = await axios.post(`${BASE_API_URL}/auth/signup`, newUser);
+    console.log(submitUser.data);
+  };
+  function handleChange(e) {
+    if (e.target.name === "username") {
+      setUser(e.target.value);
+    } else if (e.target.name === "password") {
+      setPassword(e.target.value);
+    } else {
+      setEmail(e.target.value);
     }
-  };
-
-  const handleSubmit = (values) => {
-    createUser(values);
-  };
+  }
 
   return (
-    <Box>
-      <Title>Signup</Title>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <InputWrapper
+    <div>
+      <form
+        onSubmit={(e) => {
+          handleSubmit(e);
+        }}
+      >
+        <input
+          name="username"
+          type="text"
+          placeholder="Username"
           required
-          label="Username"
-          description="Your unique username"
-          {...form.getInputProps("username")}
-        >
-          <Input {...form.getInputProps("username")} />
-        </InputWrapper>
-        <InputWrapper required label="Password" description="Your password">
-          <PasswordInput {...form.getInputProps("password")} />
-        </InputWrapper>
-        <Button type="submit">Register</Button>
+          onChange={handleChange}
+        />
+
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          required
+          onChange={handleChange}
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          required
+          onChange={handleChange}
+        />
+        <button>submit</button>
       </form>
-    </Box>
+    </div>
   );
 };
 

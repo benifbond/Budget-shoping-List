@@ -1,7 +1,7 @@
 import { BASE_API_URL } from "./constants";
 
 export const fetchData = async (setter) => {
-  const response = await fetch("http://localhost:5005/api/user");
+  const response = await fetch("http://localhost:5005/api/auth/user");
   const parsed = await response.json();
   setter(parsed);
 };
@@ -23,7 +23,7 @@ export const apiBase =
   };
 
 export const authBase = async (endpoint, credentials) => {
-  const response = await fetch(`${BASE_API_URL}/auth/user/${endpoint}`, {
+  const response = await fetch(`${BASE_API_URL}/user/${endpoint}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

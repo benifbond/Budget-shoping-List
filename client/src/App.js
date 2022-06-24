@@ -16,7 +16,6 @@ function App() {
     // <BeersContextProvider>
     <Layout>
       <Routes>
-        <Route path="/" element={<h1>Hello anonymous</h1>} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/beers" element={<PrivateRoute></PrivateRoute>} />

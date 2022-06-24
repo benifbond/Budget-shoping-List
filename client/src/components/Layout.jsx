@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { ArrowAutofitContent, Logout } from "tabler-icons-react";
+import { Logout } from "tabler-icons-react";
 import { SessionContext } from "../contexts/SessionContext";
 
 const Layout = ({ children }) => {
@@ -19,75 +19,31 @@ const Layout = ({ children }) => {
   return (
     <AppShell
       padding="md"
-      // navbar={
-      //   <Navbar width={{ base: ArrowAutofitContent }} p="xs">
-
-      // }
       header={
-        <Header height={80} p="xs">
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "end",
-              flexWrap: "nowrap",
-            }}
-          >
-            {!isAuthenticated ? (
-              <>
-                <Anchor
-                  component={NavLink}
-                  to="/signup"
-                  style={({ isActive }) =>
-                    isActive ? { color: "tomato" } : undefined
-                  }
-                >
-                  Signup
-                </Anchor>
-                <Anchor
-                  component={NavLink}
-                  to="#"
-                  style={({ isActive }) =>
-                    isActive ? { color: "lightblue" } : undefined
-                  }
-                >
-                  Login
-                </Anchor>
-              </>
-            ) : (
-              <>
-                <Anchor
-                  component={NavLink}
-                  to="/beers"
-                  style={({ isActive }) =>
-                    isActive ? { color: "tomato" } : undefined
-                  }
-                >
-                  Beers
-                </Anchor>
-                <Anchor
-                  component={NavLink}
-                  to="#"
-                  style={({ isActive }) =>
-                    isActive ? { color: "tomato" } : undefined
-                  }
-                >
-                  Ba
-                </Anchor>
-                <ActionIcon onClick={logout}>
-                  <Logout size={48} strokeWidth={2} color={"black"} />
-                </ActionIcon>
-              </>
-            )}
-            {/* </Navbar> */}
+        <Header height={60} p="xs">
+          <Box sx={{ display: "grid", gridTemplate: "1fr / 100px 1fr" }}>
+            <Anchor component={NavLink} to="/signup">
+              Signup
+            </Anchor>
+            <Anchor
+              component={NavLink}
+              to="/login"
+              style={({ isActive }) =>
+                isActive ? { color: "blue" } : undefined
+              }
+            >
+              <Anchor
+                component={NavLink}
+                to="/profile"
+                style={({ isActive }) =>
+                  isActive ? { color: "blue" } : undefined
+                }
+              ></Anchor>
+              Login
+            </Anchor>
           </Box>
         </Header>
       }
-      styles={{
-        main: {
-          backgroundColor: "#E8D3B9",
-        },
-      }}
     >
       {children}
     </AppShell>
@@ -95,3 +51,27 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
+
+// import Container from "react-bootstrap/Container";
+// import Nav from "react-bootstrap/Nav";
+// import Navbar from "react-bootstrap/Navbar";
+// import { SessionContext } from "../contexts/SessionContext";
+// import { useContext } from "react";
+// // import { NavLink } from "react-router-dom";
+// function Layout({ children }) {
+//   return (
+//     <Navbar bg="light" expand="lg">
+//       <Container>
+//         <Navbar.Brand href="#home">Minijob App</Navbar.Brand>
+//         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+//         <Navbar.Collapse id="basic-navbar-nav">
+//           <Nav className="me-auto">
+//             <Nav.Link href="/signup">Signup</Nav.Link>
+//             <Nav.Link href="/login">Login</Nav.Link>
+//           </Nav>
+//         </Navbar.Collapse>
+//       </Container>
+//     </Navbar>
+//   );
+// }
+// export default Layout;

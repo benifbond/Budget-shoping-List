@@ -1,12 +1,3 @@
-import {
-  Box,
-  Button,
-  Input,
-  InputWrapper,
-  PasswordInput,
-  Title,
-} from "@mantine/core";
-import { useForm } from "@mantine/form";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../utils/helper";
 import { useState } from "react";

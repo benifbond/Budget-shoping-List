@@ -38,7 +38,7 @@ router.get("/session", (req, res) => {
 
 router.post("/signup", (req, res) => {
   const { email, username, password } = req.body;
-  console.log(req.body);
+
   if (!username) {
     return res
       .status(400)
@@ -83,12 +83,12 @@ router.post("/signup", (req, res) => {
         });
       })
       .then((user) => {
-        // Session.create({
-        //   user: user._id,
-        //   createdAt: Date.now(),
-        // }).then((session) => {
-        //   res.status(201).json({ user, accessToken: session._id });
-        // });
+        Session.create({
+          user: user._id,
+          createdAt: Date.now(),
+        }).then((session) => {
+          res.status(201).json({ user, accessToken: session._id });
+        });
         return res.status(200).json({ user });
       })
       .catch((error) => {
@@ -106,8 +106,8 @@ router.post("/signup", (req, res) => {
   });
 });
 
-router.post("/user/login", isLoggedOut, (req, res, next) => {
-  const { username, password } = req.body;
+router.post("/login", (req, res) => {
+  const { email, username, password } = req.body;
 
   if (!username) {
     return res
@@ -117,11 +117,11 @@ router.post("/user/login", isLoggedOut, (req, res, next) => {
 
   // Here we use the same logic as above
   // - either length based parameters or we check the strength of a password
-  if (password.length < 8) {
-    return res.status(400).json({
-      errorMessage: "Your password needs to be at least 8 characters long.",
-    });
-  }
+  // if (password.length < 8) {
+  //   return res.status(400).json({
+  //     errorMessage: "Your password needs to be at least 8 characters long.",
+  //   });
+  // }
 
   // Search the database for a user with the username submitted in the form
   User.findOne({ username })
@@ -130,17 +130,24 @@ router.post("/user/login", isLoggedOut, (req, res, next) => {
       if (!user) {
         return res.status(400).json({ errorMessage: "Wrong credentials." });
       }
+      User.findOne({ email }).then((email) => {
+        console.log(email, user);
+        if (!email) {
+          return res.status(404).json({ errorMessage: "User not found." });
+        }
+      });
 
       // If user is found based on the username, check if the in putted password matches the one saved in the database
       bcrypt.compare(password, user.password).then((isSamePassword) => {
         if (!isSamePassword) {
           return res.status(400).json({ errorMessage: "Wrong credentials." });
         }
-        Session.create({ user: user._id, createdAt: Date.now() }).then(
-          (session) => {
-            return res.json({ user, accessToken: session._id });
-          }
-        );
+        return res.status(200).json({ user });
+        // Session.create({ user: user._id, createdAt: Date.now() }).then(
+        //   (session) => {
+        //     return res.json({ user, accessToken: session._id });
+        //   }
+        // );
       });
     })
 

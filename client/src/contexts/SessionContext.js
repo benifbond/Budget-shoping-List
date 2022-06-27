@@ -24,6 +24,7 @@ const SessionContextProvider = ({ children }) => {
   const verifyAuth = async () => {
     try {
       const tokenFromStorage = localStorage.getItem("authToken");
+      console.log("token", tokenFromStorage);
       const response = await checkToken(tokenFromStorage);
       if (response.errorMessage) {
         throw new Error();
@@ -35,13 +36,20 @@ const SessionContextProvider = ({ children }) => {
     }
   };
 
-  // useEffect(() => {
-  //   verifyAuth();
-  // }, []);
+  useEffect(() => {
+    verifyAuth();
+  }, []);
 
   return (
     <SessionContext.Provider
-      value={{ token, apiWithToken, isAuthenticated, authenticateUser, logout }}
+      value={{
+        token,
+        verifyAuth,
+        apiWithToken,
+        isAuthenticated,
+        authenticateUser,
+        logout,
+      }}
     >
       {children}
     </SessionContext.Provider>

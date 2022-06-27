@@ -74,6 +74,7 @@ import { BASE_API_URL } from "../utils/constants";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
 
 export default function EmployerSignup() {
   // const [user, setUser] = useState("");
@@ -108,7 +109,7 @@ export default function EmployerSignup() {
     <Box
       component="form"
       sx={{
-        "& .MuiTextField-root": { m: 1, width: "35ch" },
+        "& .MuiTextField-root": { m: 1, width: "25ch" },
       }}
       noValidate
       autoComplete="off"
@@ -146,7 +147,7 @@ export default function EmployerSignup() {
       </div>
 
       <div>
-        <button>Register</button>
+        <Button variant="contained">Register</Button>
       </div>
     </Box>
   );

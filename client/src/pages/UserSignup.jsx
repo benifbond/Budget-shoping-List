@@ -15,9 +15,10 @@ const UserSignup = () => {
     e.preventDefault();
     let newUser = { username: user, email, password };
     const submitUser = await axios.post(`${BASE_API_URL}/auth/signup`, newUser);
+    navigate("/user/login");
     console.log(submitUser.data);
   };
-  navigate("/user/login");
+
   function handleChange(e) {
     if (e.target.name === "username") {
       setUser(e.target.value);

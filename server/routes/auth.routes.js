@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const jwt = require("jsonwebtoken");
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
@@ -10,33 +11,10 @@ const saltRounds = 10;
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
 const Job = require("../models/Job.model");
-const Employer = require("../models/Employer.model");
-const Session = require("../models/Session.model");
 
-// Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
-const isLoggedOut = require("../middleware/isLoggedOut");
-const isLoggedIn = require("../middleware/isLoggedIn");
+const { isAuthenticated } = require("../middleware/jwt.middleware");
 
-router.get("/session", (req, res) => {
-  // we dont want to throw an error, and just maintain the user as null
-  if (!req.headers.authorization) {
-    return res.json(null);
-  }
-
-  // accessToken is being sent on every request in the headers
-  const accessToken = req.headers.authorization;
-
-  Session.findById(accessToken)
-    .populate("user")
-    .then((session) => {
-      if (!session) {
-        return res.status(404).json({ errorMessage: "Session does not exist" });
-      }
-      return res.status(200).json(session);
-    });
-});
-
-router.post("/signup", (req, res) => {
+router.post("/signup", (req, res, next) => {
   const { email, username, password } = req.body;
 
   if (!username) {
@@ -44,24 +22,6 @@ router.post("/signup", (req, res) => {
       .status(400)
       .json({ errorMessage: "Please provide your username." });
   }
-
-  // if (password.length < 8) {
-  //   return res.status(400).json({
-  //     errorMessage: "Your password needs to be at least 8 characters long.",
-  //   });
-  // }
-
-  //   ! This use case is using a regular expression to control for special characters and min length
-  /*
-  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
-
-  if (!regex.test(password)) {
-    return res.status(400).json( {
-      errorMessage:
-        "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
-    });
-  }
-  */
 
   // Search the database for a user with the username submitted in the form
   User.findOne({ username }).then((found) => {
@@ -106,22 +66,14 @@ router.post("/signup", (req, res) => {
   });
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", (req, res, next) => {
   const { email, username, password } = req.body;
-
+  console.log("new login", req.body);
   if (!username) {
-    return res
+    return ress
       .status(400)
       .json({ errorMessage: "Please provide your username." });
   }
-
-  // Here we use the same logic as above
-  // - either length based parameters or we check the strength of a password
-  // if (password.length < 8) {
-  //   return res.status(400).json({
-  //     errorMessage: "Your password needs to be at least 8 characters long.",
-  //   });
-  // }
 
   // Search the database for a user with the username submitted in the form
   User.findOne({ username })
@@ -143,23 +95,34 @@ router.post("/login", (req, res) => {
           return res.status(400).json({ errorMessage: "Wrong credentials." });
         }
         return res.status(200).json({ user });
-        // Session.create({ user: user._id, createdAt: Date.now() }).then(
-        //   (session) => {
-        //     return res.json({ user, accessToken: session._id });
-        //   }
-        // );
       });
+      if (passwordCorrect) {
+        // Deconstruct the user object to omit the password
+        const { _id, email, name } = user;
+
+        // Create an object that will be set as the token payload
+        const payload = { _id, email, name };
+
+        // Create and sign the token
+        const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+          algorithm: "HS256",
+          expiresIn: "6h",
+        });
+
+        // Send the token as the response
+        res.status(200).json({ authToken: authToken });
+      } else {
+        res.status(401).json({ message: "Unable to authenticate the user" });
+      }
     })
 
     .catch((err) => {
-      // in this case we are sending the error handling to the error handling middleware that is defined in the error handling file
-      // you can just as easily run the res.status that is commented out below
       next(err);
-      // return res.status(500).render("login", { errorMessage: err.message });
+      return res.status(500).render("login", { errorMessage: err.message });
     });
 });
 
-router.delete("/user/logout", isLoggedIn, (req, res) => {
+router.delete("/user/logout", (req, res) => {
   Session.findByIdAndDelete(req.headers.authorization)
     .then(() => {
       res.status(200).json({ message: "User was logged out" });

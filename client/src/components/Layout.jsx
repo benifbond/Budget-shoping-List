@@ -1,80 +1,37 @@
-import {
-  ActionIcon,
-  Anchor,
-  AppShell,
-  Box,
-  Header,
-  Image,
-  Navbar,
-  Title,
-} from "@mantine/core";
-import { useContext } from "react";
-import { NavLink } from "react-router-dom";
-import { Logout } from "tabler-icons-react";
-import { SessionContext } from "../contexts/SessionContext";
+import { NavLink, Link } from "react-router-dom";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import HomeIcon from "@mui/icons-material/Home";
 
-const Layout = ({ children }) => {
-  const { isAuthenticated, logout } = useContext(SessionContext);
+import UserAuthModal from "./modals/UserAuthModal.jsx";
+import EmployerAuthModal from "./modals/EmployerAuthModal.jsx";
+
+export default function Layout({ children }) {
+  const [value, setValue] = React.useState(0);
 
   return (
-    <AppShell
-      padding="md"
-      header={
-        <Header height={60} p="xs">
-          <Box sx={{ display: "grid", gridTemplate: "1fr / 100px 1fr" }}>
-            <Anchor component={NavLink} to="/signup">
-              Signup
-            </Anchor>
-            <Anchor
-              component={NavLink}
-              to="/login"
-              style={({ isActive }) =>
-                isActive ? { color: "blue" } : undefined
-              }
-            >
-              <Anchor
-                component={NavLink}
-                to="/profile"
-                style={({ isActive }) =>
-                  isActive ? { color: "blue" } : undefined
-                }
-              ></Anchor>
-              Login
-            </Anchor>
-            <Anchor component={NavLink} to="/employer/signup">
-              employer
-            </Anchor>
-          </Box>
-        </Header>
-      }
-    >
+    <Box sx={{ width: 500 }}>
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      >
+        <BottomNavigationAction
+          label="Home"
+          component={NavLink}
+          to="/"
+          icon={<HomeIcon />}
+        />
+
+        <UserAuthModal />
+        <EmployerAuthModal />
+      </BottomNavigation>
+
       {children}
-    </AppShell>
+    </Box>
   );
-};
-
-export default Layout;
-
-// import Container from "react-bootstrap/Container";
-// import Nav from "react-bootstrap/Nav";
-// import Navbar from "react-bootstrap/Navbar";
-// import { SessionContext } from "../contexts/SessionContext";
-// import { useContext } from "react";
-// // import { NavLink } from "react-router-dom";
-// function Layout({ children }) {
-//   return (
-//     <Navbar bg="light" expand="lg">
-//       <Container>
-//         <Navbar.Brand href="#home">Minijob App</Navbar.Brand>
-//         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-//         <Navbar.Collapse id="basic-navbar-nav">
-//           <Nav className="me-auto">
-//             <Nav.Link href="/signup">Signup</Nav.Link>
-//             <Nav.Link href="/login">Login</Nav.Link>
-//           </Nav>
-//         </Navbar.Collapse>
-//       </Container>
-//     </Navbar>
-//   );
-// }
-// export default Layout;
+}

@@ -1,6 +1,5 @@
 // import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 import Layout from "./components/Layout";
 import PrivateRoute from "./components/PrivateRoute";

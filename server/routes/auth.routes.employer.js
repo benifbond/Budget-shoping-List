@@ -4,6 +4,8 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
+const { isAuthenticated } = require("../middleware/jwt.middleware");
+
 // How many rounds should bcrypt run the salt (default [10 - 12 rounds])
 const saltRounds = 10;
 
@@ -13,30 +15,12 @@ const Employer = require("../models/Employer.model");
 
 router.post("/employer/signup", (req, res) => {
   const { password, email } = req.body;
-  console.log(req.body);
+
   if (!email) {
     return res
       .status(400)
       .json({ errorMessage: "Please provide your username." });
   }
-
-  // if (password.length < 8) {
-  //   return res.status(400).json({
-  //     errorMessage: "Your password needs to be at least 8 characters long.",
-  //   });
-  // }
-
-  //   ! This use case is using a regular expression to control for special characters and min length
-  /*
-  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
-
-  if (!regex.test(password)) {
-    return res.status(400).json( {
-      errorMessage:
-        "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
-    });
-  }
-  */
 
   // Search the database for a user with the username submitted in the form
   Employer.findOne({ email }).then((found) => {
@@ -46,93 +30,42 @@ router.post("/employer/signup", (req, res) => {
     }
 
     // if user is not found, create a new user - start with hashing the password
-    return (
-      bcrypt
-        .genSalt(saltRounds)
-        .then((salt) => bcrypt.hash(password, salt))
-        .then((hashedPassword) => {
-          // Create a user and save it in the database
-          return Employer.create({
-            email,
+    return bcrypt
+      .genSalt(saltRounds)
+      .then((salt) => bcrypt.hash(password, salt))
+      .then((hashedPassword) => {
+        // Create a user and save it in the database
+        return Employer.create({
+          email,
 
-            password: hashedPassword,
+          password: hashedPassword,
+        });
+      })
+      .catch((error) => {
+        if (error instanceof mongoose.Error.ValidationError) {
+          return res.status(400).json({ errorMessage: error.message });
+        }
+        if (error.code === 11000) {
+          return res.status(400).json({
+            errorMessage:
+              "Username need to be unique. The username you chose is already in use.",
           });
-        })
-        // .then((user) => {
-        //   Session.create({
-        //     user: user._id,
-        //     createdAt: Date.now(),
-        //   }).then((session) => {
-        //     res.status(201).json({ user, accessToken: session._id });
-        //   });
-        // })
-        .catch((error) => {
-          if (error instanceof mongoose.Error.ValidationError) {
-            return res.status(400).json({ errorMessage: error.message });
-          }
-          if (error.code === 11000) {
-            return res.status(400).json({
-              errorMessage:
-                "Username need to be unique. The username you chose is already in use.",
-            });
-          }
-          return res.status(500).json({ errorMessage: error.message });
-        })
-    );
+        }
+        return res.status(500).json({ errorMessage: error.message });
+      });
   });
 });
 
 //<<<<<<<<<<<<<<<<<<L O G I N >>>>>>>>>>>>>>>>>
 
-// router.get("/employer/login", (req, res) => res.render("auth/login"))
-// router.post("/login", async(req, res, next) => {
-//   const { email, password } = req.body
-//   if (email === "" || password === "") {
-//     res.render("auth/login", {
-//       errorMessage: "Please enter both, email and password to login.",
-//     })
-//     return
-//   }
-//   const user = await User.findOne({ email })
-//       if (!user?.email) {
-//         res.render("auth/login", { errorMessage: "Email is not registered. Try with other email." })
-//         return
-//       }
-//       else if (bcryptjs.compareSync(password, user.passwordHash)) {
-//         //******* SAVE THE USER IN THE SESSION ********//
-//         req.session.currentUser = user
-//   res.redirect('/userProfile')
-// } else {
-//         // if the two passwords DON"T match, render the login form again
-//         // and send the error message to the user
-//         res.render('auth/login', { errorMessage: 'Incorrect password.' })
-//       }
-//     })
-// router.get("/userProfile", async (req, res) => {
-//   const currentUser = req.session.currentUser;
-//   let allBooks = await Book.find()
-//   const userBooks = {
-//     currentUser,
-//     allBooks
-//   }
-
 router.post("/employer/login", (req, res) => {
   const { email, password } = req.body;
-
+  console.log("here is the login", req.body);
   if (!email) {
     return res
       .status(400)
       .json({ errorMessage: "Please provide your username." });
   }
-
-  // Here we use the same logic as above
-  // - either length based parameters or we check the strength of a password
-  // if (password.length < 8) {
-  //   return res.status(400).json({
-  //     errorMessage: "Your password needs to be at least 8 characters long.",
-  //   });
-  // }
-
   // Search the database for a user with the username submitted in the form
   Employer.findOne({ email })
     .then((user) => {
@@ -148,11 +81,6 @@ router.post("/employer/login", (req, res) => {
             .status(400)
             .json({ errorMessage: "Wrong credentials bycryt." });
         }
-        // Session.create({ user: user._id, createdAt: Date.now() }).then(
-        //   (session) => {
-        //     return res.json({ user, accessToken: session._id });
-        //   }
-        // );
       });
     })
 
@@ -173,7 +101,7 @@ router.delete("/employer/logout", (req, res) => {
     });
 });
 
-router.post("/postjob", async (req, res) => {
+router.post("/postjob", isAuthenticated, async (req, res, next) => {
   try {
     const { title, description, location, price } = req.body;
     const newJob = { title, description, location, price: Number(price) };
@@ -185,12 +113,10 @@ router.post("/postjob", async (req, res) => {
   }
 });
 router.get("/jobs", async (req, res) => {
-  try {
-    const jobOffers = await Job.find();
-    console.log(jobOffers);
-  } catch {
-    console.log("No job offer found");
-  }
+  console.log("jobOffers");
+  const jobOffers = await Job.find();
+  res.json(jobOffers);
+  console.log(jobOffers);
 });
 
 module.exports = router;

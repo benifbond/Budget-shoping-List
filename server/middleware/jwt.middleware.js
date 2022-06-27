@@ -1,37 +1,31 @@
-// const { expressjwt: jwt } = require("express-jwt");
+// middleware/jwt.middleware.js
 
-// // Instantiate the JWT token validation middleware
-// const isAuthenticated = jwt({
-//   secret: process.env.TOKEN_SECRET,
-//   algorithms: ["HS256"],
-//   requestProperty: "payload",
-//   getToken: getTokenFromHeaders,
-// });
-// /* return (req,res,next) => {
-//     // Get payload from token
-//     const payload = {...}
-//     req.payload = payload
+const { expressjwt: jwt } = require("express-jwt");
 
-//     next()
-//   }
-// */
+// Instantiate the JWT token validation middleware
+const isAuthenticated = jwt({
+  secret: process.env.TOKEN_SECRET,
+  algorithms: ["HS256"],
+  requestProperty: "payload",
+  getToken: getTokenFromHeaders,
+});
 
-// // Function used to extracts the JWT token from the request's 'Authorization' Headers
-// function getTokenFromHeaders(req) {
-//   // Check if the token is available on the request Headers
-//   if (
-//     req.headers.authorization &&
-//     req.headers.authorization.split(" ")[0] === "Bearer"
-//   ) {
-//     // Get the encoded token string and return it
-//     const token = req.headers.authorization.split(" ")[1];
-//     return token;
-//   }
+// Function used to extracts the JWT token from the request's 'Authorization' Headers
+function getTokenFromHeaders(req) {
+  // Check if the token is available on the request Headers
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.split(" ")[0] === "Bearer"
+  ) {
+    // Get the encoded token string and return it
+    const token = req.headers.authorization.split(" ")[1];
+    return token;
+  }
 
-//   return null;
-// }
+  return null;
+}
 
-// // Export the middleware so that we can use it to create a protected routes
-// module.exports = {
-//   isAuthenticated,
-// };
+// Export the middleware so that we can use it to create a protected routes
+module.exports = {
+  isAuthenticated,
+};

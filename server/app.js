@@ -20,14 +20,16 @@ require("./config")(app);
 const allRoutes = require("./routes/index.routes");
 app.use("/api", allRoutes);
 
+const { isAuthenticated } = require("./middleware/jwt.middleware");
+
 const authRoutes = require("./routes/auth.routes");
-app.use("/auth", authRoutes);
+app.use("/auth", isAuthenticated, authRoutes);
 
 // const authRouteEmployers = require("./auth.routes.employer");
 // app.use("/auth", authRouteEmployers);
 /* GET home page */
 const allEmployeRoutes = require("./routes/auth.routes.employer");
-app.use("/api", allEmployeRoutes);
+app.use("/api", isAuthenticated, allEmployeRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

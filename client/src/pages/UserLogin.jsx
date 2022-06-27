@@ -16,7 +16,7 @@ const UserLogin = () => {
     let newUser = { username: user, email, password };
 
     const submitUser = await axios.post(`${BASE_API_URL}/auth/login`, newUser);
-    navigate("/profile");
+    navigate("/user/profile");
   };
   function handleChange(e) {
     if (e.target.name === "username") {

@@ -1,33 +1,34 @@
-import { useNavigate } from "react-router-dom";
-import { login } from "../utils/helper";
+import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 
-const UserLogin = () => {
+function EmployerLogin() {
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
+  const navigate = useNavigate;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let newUser = { username: user, email, password };
+    let newUser = { email, password };
+    console.log("");
+    const submitUser = await axios.post(
+      `${BASE_API_URL}/api/employer/login`,
+      newUser
+    );
 
-    const submitUser = await axios.post(`${BASE_API_URL}/auth/login`, newUser);
-    navigate("/user/profile");
+    navigate("/employer/profile");
   };
   function handleChange(e) {
-    if (e.target.name === "username") {
-      setUser(e.target.value);
-    } else if (e.target.name === "password") {
+    if (e.target.name === "password") {
       setPassword(e.target.value);
     } else {
       setEmail(e.target.value);
     }
   }
-
   return (
     <div>
       <form
@@ -35,14 +36,6 @@ const UserLogin = () => {
           handleSubmit(e);
         }}
       >
-        <input
-          name="username"
-          type="text"
-          placeholder="Username"
-          required
-          onChange={handleChange}
-        />
-
         <input
           name="email"
           type="email"
@@ -61,6 +54,6 @@ const UserLogin = () => {
       </form>
     </div>
   );
-};
+}
 
-export default UserLogin;
+export default EmployerLogin;

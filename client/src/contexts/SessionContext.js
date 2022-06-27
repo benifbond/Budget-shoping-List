@@ -35,9 +35,9 @@ const SessionContextProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    verifyAuth();
-  }, []);
+  // useEffect(() => {
+  //   verifyAuth();
+  // }, []);
 
   return (
     <SessionContext.Provider

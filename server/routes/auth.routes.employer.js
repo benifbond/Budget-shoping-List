@@ -112,7 +112,7 @@ router.post("/postjob", isAuthenticated, async (req, res, next) => {
     console.log("Unable to create job");
   }
 });
-router.get("/jobs", async (req, res) => {
+router.get("/jobs", isAuthenticated, async (req, res) => {
   console.log("jobOffers");
   const jobOffers = await Job.find();
   res.json(jobOffers);

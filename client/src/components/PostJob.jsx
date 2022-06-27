@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
+import { Button } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
 const PostJob = () => {
   const [title, setTitle] = useState("");
@@ -70,6 +72,9 @@ const PostJob = () => {
           onChange={handleChange}
         />
         <button className="btn btn-primary">submit</button>
+        <Button variant="contained" endIcon={<SendIcon />}>
+          post
+        </Button>
       </form>
     </div>
   );

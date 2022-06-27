@@ -26,7 +26,6 @@ export default function Layout({ children }) {
           to="/"
           icon={<HomeIcon />}
         />
-
         <UserAuthModal />
         <EmployerAuthModal />
       </BottomNavigation>

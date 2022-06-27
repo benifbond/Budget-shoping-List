@@ -1,14 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../utils/helper";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
+import { SessionContext } from "../contexts/SessionContext";
 
 const UserLogin = () => {
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const { authenticateUser, verifyAuth } = useContext(SessionContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,6 +17,9 @@ const UserLogin = () => {
     let newUser = { username: user, email, password };
 
     const submitUser = await axios.post(`${BASE_API_URL}/auth/login`, newUser);
+    console.log(submitUser.data);
+    authenticateUser(submitUser.data.authToken);
+    verifyAuth();
     navigate("/user/profile");
   };
   function handleChange(e) {

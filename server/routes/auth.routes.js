@@ -15,6 +15,7 @@ const Job = require("../models/Job.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 router.post("/signup", (req, res, next) => {
+  console.log("the testing route", req.body);
   const { email, username, password } = req.body;
 
   if (!username) {
@@ -31,38 +32,40 @@ router.post("/signup", (req, res, next) => {
     }
 
     // if user is not found, create a new user - start with hashing the password
-    return bcrypt
-      .genSalt(saltRounds)
-      .then((salt) => bcrypt.hash(password, salt))
-      .then((hashedPassword) => {
-        // Create a user and save it in the database
-        return User.create({
-          username,
-          password: hashedPassword,
-          email,
-        });
-      })
-      .then((user) => {
-        Session.create({
-          user: user._id,
-          createdAt: Date.now(),
-        }).then((session) => {
-          res.status(201).json({ user, accessToken: session._id });
-        });
-        return res.status(200).json({ user });
-      })
-      .catch((error) => {
-        if (error instanceof mongoose.Error.ValidationError) {
-          return res.status(400).json({ errorMessage: error.message });
-        }
-        if (error.code === 11000) {
-          return res.status(400).json({
-            errorMessage:
-              "Username need to be unique. The username you chose is already in use.",
+    return (
+      bcrypt
+        .genSalt(saltRounds)
+        .then((salt) => bcrypt.hash(password, salt))
+        .then((hashedPassword) => {
+          // Create a user and save it in the database
+          return User.create({
+            username,
+            password: hashedPassword,
+            email,
           });
-        }
-        return res.status(500).json({ errorMessage: error.message });
-      });
+        })
+        // .then((user) => {
+        //   Session.create({
+        //     user: user._id,
+        //     createdAt: Date.now(),
+        //   }).then((session) => {
+        //     res.status(201).json({ user, accessToken: session._id });
+        //   });
+        //   return res.status(200).json({ user });
+        // })
+        .catch((error) => {
+          if (error instanceof mongoose.Error.ValidationError) {
+            return res.status(400).json({ errorMessage: error.message });
+          }
+          if (error.code === 11000) {
+            return res.status(400).json({
+              errorMessage:
+                "Username need to be unique. The username you chose is already in use.",
+            });
+          }
+          return res.status(500).json({ errorMessage: error.message });
+        })
+    );
   });
 });
 
@@ -94,28 +97,26 @@ router.post("/login", (req, res, next) => {
         if (!isSamePassword) {
           return res.status(400).json({ errorMessage: "Wrong credentials." });
         }
-        return res.status(200).json({ user });
+
+        if (isSamePassword) {
+          // Deconstruct the user object to omit the password
+          const { _id, email, name } = user;
+
+          // Create an object that will be set as the token payload
+          const payload = { _id, email, name };
+
+          // Create and sign the token
+          const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+            algorithm: "HS256",
+            expiresIn: "6h",
+          });
+          console.log("here is jwt ", authToken);
+          // Send the token as the response
+          res.status(200).json({ authToken: authToken });
+        } else {
+          res.status(401).json({ message: "Unable to authenticate the user" });
+        }
       });
-      if (passwordCorrect) {
-        // Deconstruct the user object to omit the password
-        const { _id, email, name } = user;
-
-        // Create an object that will be set as the token payload
-        const payload = { _id, email, name };
-
-        // Create and sign the token
-        const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
-          algorithm: "HS256",
-          expiresIn: "6h",
-        });
-
-console.log('Here is JWT',authToken)
-
-        // Send the token as the response
-        res.status(200).json({ authToken: authToken });
-      } else {
-        res.status(401).json({ message: "Unable to authenticate the user" });
-      }
     })
 
     .catch((err) => {
@@ -133,6 +134,11 @@ router.delete("/user/logout", (req, res) => {
       console.log(err);
       res.status(500).json({ errorMessage: err.message });
     });
+});
+
+router.get("/verify", isAuthenticated, (req, res) => {
+  console.log("here is the payload", req.payload);
+  res.status(200).json(req.payload);
 });
 
 module.exports = router;

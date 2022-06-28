@@ -1,3 +1,9 @@
+// import React from "react";
+
+// function HomePage() {
+//   return <div></div>;
+// }
+// export default HomePage;
 
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';

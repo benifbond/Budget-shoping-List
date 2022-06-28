@@ -5,7 +5,7 @@ import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 import { SessionContext } from "../contexts/SessionContext";
 
-import HomePage from '../components/HomePage'
+import UserLoginMaterial from "../components/UserLoginMaterial";
 
 //<<<<<<<<<<<<<<<IMPORT from M-UI>>>>>>>>>>>>>>>
 import * as React from 'react';
@@ -87,7 +87,7 @@ const UserLogin = () => {
         <button>Login</button>
       </form>
 
-<HomePage />
+<UserLoginMaterial />
 
     </div>
   );

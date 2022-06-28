@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 
-import HomePage from '../components/HomePage'
+import UserSignupMaterial from '../components/UserSignupMaterial'
 
 //<<<<<<<<<<<<<<<IMPORT from M-UI>>>>>>>>>>>>>>>
 import * as React from 'react';
@@ -84,7 +84,7 @@ const UserSignup = () => {
         <button>submit</button>
       </form>
 
-      <HomePage />
+      <UserSignupMaterial />
 
     </div>
   );

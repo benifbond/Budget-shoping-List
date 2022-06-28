@@ -18,7 +18,7 @@ import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 
 function UserProfile() {
-  const [jobs, setJobs] = useState(null);
+  const [jobs, setJobs] = useState([]);
   const { token } = useContext(SessionContext);
   const getAllJobs = async () => {
     const response = await fetch(`${BASE_API_URL}/api/jobs`, {
@@ -29,7 +29,7 @@ function UserProfile() {
     });
     const data = await response.json();
     console.log(data);
-    setJobs(data);
+    setJobs(data.jobOffers);
 
     // axios
     //   .get(`${BASE_API_URL}/api/jobs`)
@@ -43,12 +43,10 @@ function UserProfile() {
   useEffect(() => {
     getAllJobs();
   }, []);
-  if (!jobs) {
-    <p>Looding</p>;
-  }
+
   return (
     <div>
-      <h1>profiel</h1>
+      <h1>Profil</h1>
       {jobs &&
         jobs.map((job) => {
           return (
@@ -71,7 +69,7 @@ function UserProfile() {
                         <Avatar alt="Profile Picture" />
                       </ListItemAvatar>
                       <ListItemText
-                        primary={job.decription}
+                        primary={job.description}
                         secondary={job.price}
                       />
                     </ListItem>

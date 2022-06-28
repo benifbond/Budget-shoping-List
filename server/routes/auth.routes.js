@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 
+const fileUploader = require("../config/cloudinary.config");
+
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
@@ -139,5 +141,7 @@ router.delete("/user/logout", (req, res) => {
 router.get("/verify", isAuthenticated, (req, res) => {
   res.status(200).json(req.payload);
 });
+
+////////////////////cloudinary setup ////////////////
 
 module.exports = router;

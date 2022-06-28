@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
+const fileUploader = require("../config/cloudinary.config");
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
@@ -135,6 +136,46 @@ router.get("/jobs", async (req, res) => {
   const jobOffers = await Job.find();
   res.status(200).json({ jobOffers });
   console.log(jobOffers);
+});
+
+///////////////////////Cloudinary setup//////////////////////
+router.get("/employer/photo", (req, res, next) => {
+  Employer.find()
+    .then((PhotosFromDB) => res.status(200).json(PhotosFromDB))
+    .catch((err) => next(err));
+});
+
+// POST "/api/upload" => Route that receives the image, sends it to Cloudinary via the fileUploader and returns the image URL
+router.post(
+  "/employer/upload",
+  fileUploader.single("imageUrl"),
+  (req, res, next) => {
+    // console.log("file is: ", req.file)
+
+    if (!req.file) {
+      next(new Error("No file uploaded!"));
+      return;
+    }
+
+    // Get the URL of the uploaded file and send it as a response.
+    // 'fileUrl' can be any name, just make sure you remember to use the same when accessing it on the frontend
+
+    res.json({ fileUrl: req.file.path });
+  }
+);
+
+// POST '/api/movies' => for saving a new movie in the database
+router.post("/employer/images", (req, res, next) => {
+  "body: ", req.body;
+  // the fields have the same names as the ones in the model so we can simply pass
+  // req.body to the .create() method
+
+  Employer.create(req.body)
+    .then((createdImage) => {
+      // console.log('Created new movie: ', createdMovie);
+      res.status(200).json(createdImage);
+    })
+    .catch((err) => next(err));
 });
 
 module.exports = router;

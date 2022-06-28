@@ -11,7 +11,7 @@ const employerSchema = new Schema(
     name: String,
     email: { type: String, trim: true },
     password: String,
-
+    imageUrl: String,
     createJobs: [{ type: Schema.Types.ObjectId, ref: Job }],
   },
 

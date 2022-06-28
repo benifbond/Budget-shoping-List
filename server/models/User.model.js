@@ -11,7 +11,7 @@ const userSchema = new Schema(
 
     password: String,
     applyJobs: [{ type: Schema.Types.ObjectId, ref: Job }],
-    image: String,
+    imageUrl: String,
     email: String,
   },
   {

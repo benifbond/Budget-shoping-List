@@ -9,7 +9,8 @@ import SendIcon from "@mui/icons-material/Send";
 const PostJob = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const [salary, setSalary] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const [location, setLocation] = useState("");
 
@@ -17,7 +18,7 @@ const PostJob = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let newJob = { title, price, location, description };
+    let newJob = { title, salary, location, description };
     console.log("this is the new job", newJob);
     const postjob = await axios.post(`${BASE_API_URL}/api/postjob`, newJob);
 
@@ -26,7 +27,7 @@ const PostJob = () => {
   function handleChange(e) {
     console.log(e.target.value);
     if (e.target.name === "price") {
-      setPrice(e.target.value);
+      setSalary(e.target.value);
     } else if (e.target.name === "location") {
       setLocation(e.target.value);
     } else if (e.target.name === "title") {

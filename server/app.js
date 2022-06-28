@@ -29,7 +29,7 @@ app.use("/auth", authRoutes);
 // app.use("/auth", authRouteEmployers);
 /* GET home page */
 const allEmployeRoutes = require("./routes/auth.routes.employer");
-app.use("/api", isAuthenticated, allEmployeRoutes);
+app.use("/api", allEmployeRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

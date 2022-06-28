@@ -1,27 +1,32 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 
+import { SessionContext } from "../contexts/SessionContext";
+
 function EmployerLogin() {
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState("");
+  const { authenticateUser, verifyAuth } = useContext(SessionContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newUser = { email, password };
-    console.log("");
     const submitUser = await axios.post(
       `${BASE_API_URL}/api/employer/login`,
       newUser
     );
+    authenticateUser(submitUser.data.authToken);
 
+    verifyAuth();
     navigate("/employer/profile");
   };
+
   function handleChange(e) {
     if (e.target.name === "password") {
       setPassword(e.target.value);

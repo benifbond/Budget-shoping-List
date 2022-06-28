@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const jwt = require("jsonwebtoken");
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
@@ -15,7 +16,7 @@ const Employer = require("../models/Employer.model");
 
 router.post("/employer/signup", (req, res) => {
   const { password, email } = req.body;
-
+  console.log("here is signup");
   if (!email) {
     return res
       .status(400)
@@ -60,7 +61,7 @@ router.post("/employer/signup", (req, res) => {
 
 router.post("/employer/login", (req, res) => {
   const { email, password } = req.body;
-  console.log("here is the login", req.body);
+
   if (!email) {
     return res
       .status(400)
@@ -80,6 +81,24 @@ router.post("/employer/login", (req, res) => {
           return res
             .status(400)
             .json({ errorMessage: "Wrong credentials bycryt." });
+        }
+        if (isSamePassword) {
+          // Deconstruct the user object to omit the password
+          const { _id, email, name } = user;
+
+          // Create an object that will be set as the token payload
+          const payload = { _id, email, name };
+
+          // Create and sign the token
+          const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+            algorithm: "HS256",
+            expiresIn: "6h",
+          });
+          console.log("here is jwt ", authToken);
+          // Send the token as the response
+          res.status(200).json({ authToken: authToken });
+        } else {
+          res.status(401).json({ message: "Unable to authenticate the user" });
         }
       });
     })
@@ -101,7 +120,7 @@ router.delete("/employer/logout", (req, res) => {
     });
 });
 
-router.post("/postjob", isAuthenticated, async (req, res, next) => {
+router.post("/postjob", async (req, res, next) => {
   try {
     const { title, description, location, price } = req.body;
     const newJob = { title, description, location, price: Number(price) };
@@ -112,10 +131,9 @@ router.post("/postjob", isAuthenticated, async (req, res, next) => {
     console.log("Unable to create job");
   }
 });
-router.get("/jobs", isAuthenticated, async (req, res) => {
-  console.log("jobOffers");
+router.get("/jobs", async (req, res) => {
   const jobOffers = await Job.find();
-  res.json(jobOffers);
+  res.status(200).json({ jobOffers });
   console.log(jobOffers);
 });
 

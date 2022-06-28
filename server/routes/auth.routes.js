@@ -137,7 +137,6 @@ router.delete("/user/logout", (req, res) => {
 });
 
 router.get("/verify", isAuthenticated, (req, res) => {
-  console.log("here is the payload", req.payload);
   res.status(200).json(req.payload);
 });
 

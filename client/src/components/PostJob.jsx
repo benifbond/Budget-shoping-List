@@ -18,12 +18,13 @@ const PostJob = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newJob = { title, price, location, description };
-    console.log(newJob);
+    console.log("this is the new job", newJob);
     const postjob = await axios.post(`${BASE_API_URL}/api/postjob`, newJob);
 
-    console.log(postjob.data);
+    navigate("/employer/profile");
   };
   function handleChange(e) {
+    console.log(e.target.value);
     if (e.target.name === "price") {
       setPrice(e.target.value);
     } else if (e.target.name === "location") {
@@ -71,10 +72,11 @@ const PostJob = () => {
           required
           onChange={handleChange}
         />
-        <button className="btn btn-primary">submit</button>
-        <Button variant="contained" endIcon={<SendIcon />}>
+
+        {/* <Button variant="contained" endIcon={<SendIcon />}>
           post
-        </Button>
+        </Button> */}
+        <button> post</button>
       </form>
     </div>
   );

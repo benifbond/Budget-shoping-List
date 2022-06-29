@@ -1,45 +1,38 @@
 
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
-import ThreeDRotation from "@mui/icons-material/ThreeDRotation";
-import { AvatarGroup } from "@mui/material";
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
+import { AvatarGroup } from '@mui/material';
+
+import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { SessionContext } from "../contexts/SessionContext";
+import axios from "axios";
+import { BASE_API_URL } from "../utils/constants";
 
 function Copyright(props) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Rob & Ben
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-<<<<<<< HEAD
-      {"."}
-      <AvatarGroup>
-        <Avatar alt="Robert" src="/static/images/avatar/1.jpg" />
-        <Avatar alt="Beniah" src="/static/images/avatar/2.jpg" />
-      </AvatarGroup>
-=======
       {'.'}
 
->>>>>>> 0f3a379d6b8e30f36b710612c444d5214434b35e
     </Typography>
   );
 }
@@ -47,15 +40,32 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const [user, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { authenticateUser } = useContext(SessionContext);
+  const navigate = useNavigate();
+
+ 
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      user: data.get("user"),
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+    let newUser = { username: user, email, password };
+    const submitUser = await axios.post(`${BASE_API_URL}/auth/signup`, newUser);
+    console.log(submitUser.data);
+    navigate("/user/login");
+      };
+
+      function handleChange(e) {
+        console.log(e.target.value)
+        if (e.target.name === "user") {
+          setUsername(e.target.value);
+        } else if (e.target.name === "password") {
+          setPassword(e.target.value);
+        } else {
+          setEmail(e.target.value);
+        }
+      }
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -100,16 +110,18 @@ export default function SignInSide() {
               sx={{ mt: 1 }}
             >
               <TextField
+              onChange={handleChange}
                 margin="normal"
                 required
                 fullWidth
-                id="user"
+                id="username"
                 label="Username"
                 name="user"
-                autoComplete="user"
+                autoComplete="username"
                 autoFocus
               />
               <TextField
+              onChange={handleChange}
                 margin="normal"
                 required
                 fullWidth
@@ -120,6 +132,7 @@ export default function SignInSide() {
                 autoFocus
               />
               <TextField
+              onChange={handleChange}
                 margin="normal"
                 required
                 fullWidth
@@ -139,7 +152,7 @@ export default function SignInSide() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Submit
               </Button>
               <Grid container>
                 <Grid item xs>
@@ -165,3 +178,21 @@ export default function SignInSide() {
     </ThemeProvider>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -57,9 +57,29 @@ router.post("/signup", (req, res, next) => {
             errorMessage:
               "Username need to be unique. The username you chose is already in use.",
           });
+<<<<<<< HEAD
         }
         return res.status(500).json({ errorMessage: error.message });
       });
+=======
+        })
+       .then((user)=> {
+        res.status(200).json(user)
+       }) 
+        .catch((error) => {
+          if (error instanceof mongoose.Error.ValidationError) {
+            return res.status(400).json({ errorMessage: error.message });
+          }
+          if (error.code === 11000) {
+            return res.status(400).json({
+              errorMessage:
+                "Username need to be unique. The username you chose is already in use.",
+            });
+          }
+          return res.status(500).json({ errorMessage: error.message });
+        })
+    );
+>>>>>>> 0f3a379d6b8e30f36b710612c444d5214434b35e
   });
 });
 
@@ -67,9 +87,7 @@ router.post("/login", (req, res, next) => {
   const { email, username, password } = req.body;
   console.log("new login", req.body);
   if (!username) {
-    return ress
-      .status(400)
-      .json({ errorMessage: "Please provide your username." });
+    return res.status(400).json({ errorMessage: "Please provide your username." });
   }
 
   // Search the database for a user with the username submitted in the form
@@ -90,9 +108,7 @@ router.post("/login", (req, res, next) => {
       bcrypt.compare(password, user.password).then((isSamePassword) => {
         if (!isSamePassword) {
           return res.status(400).json({ errorMessage: "Wrong credentials." });
-        }
-
-        if (isSamePassword) {
+        } else {
           // Deconstruct the user object to omit the password
           const { _id, email, name } = user;
 
@@ -107,14 +123,11 @@ router.post("/login", (req, res, next) => {
           console.log("here is jwt ", authToken);
           // Send the token as the response
           res.status(200).json({ authToken: authToken });
-        } else {
-          res.status(401).json({ message: "Unable to authenticate the user" });
-        }
+        } 
       });
     })
 
     .catch((err) => {
-      next(err);
       return res.status(500).render("login", { errorMessage: err.message });
     });
 });

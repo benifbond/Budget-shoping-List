@@ -5,7 +5,7 @@ import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 import { SessionContext } from "../contexts/SessionContext";
 
-import HomePage from '../components/HomePage'
+import UserLoginMaterial from "../components/UserLoginMaterial";
 
 //<<<<<<<<<<<<<<<IMPORT from M-UI>>>>>>>>>>>>>>>
 import * as React from 'react';
@@ -38,13 +38,13 @@ const UserLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newUser = { username: user, email, password };
-
     const submitUser = await axios.post(`${BASE_API_URL}/auth/login`, newUser);
     console.log(submitUser.data);
     authenticateUser(submitUser.data.authToken);
     verifyAuth();
     navigate("/user/profile");
   };
+  
   function handleChange(e) {
     if (e.target.name === "username") {
       setUser(e.target.value);
@@ -57,7 +57,7 @@ const UserLogin = () => {
 
   return (
     <div>
-      <form
+      {/* <form
         onSubmit={(e) => {
           handleSubmit(e);
         }}
@@ -85,9 +85,9 @@ const UserLogin = () => {
           onChange={handleChange}
         />
         <button>Login</button>
-      </form>
+      </form> */}
 
-<HomePage />
+<UserLoginMaterial />
 
     </div>
   );

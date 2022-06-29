@@ -1,45 +1,38 @@
 
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
-import ThreeDRotation from "@mui/icons-material/ThreeDRotation";
-import { AvatarGroup } from "@mui/material";
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
+import { AvatarGroup } from '@mui/material';
+
+import { useNavigate, NavLink } from "react-router-dom";
+import { useState, useContext } from "react";
+import { SessionContext } from "../contexts/SessionContext";
+import axios from "axios";
+import { BASE_API_URL } from "../utils/constants";
 
 function Copyright(props) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Rob & Ben
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-<<<<<<< HEAD
-      {"."}
-      <AvatarGroup>
-        <Avatar alt="Robert" src="/static/images/avatar/1.jpg" />
-        <Avatar alt="Beniah" src="/static/images/avatar/2.jpg" />
-      </AvatarGroup>
-=======
       {'.'}
 
->>>>>>> 0f3a379d6b8e30f36b710612c444d5214434b35e
     </Typography>
   );
 }
@@ -47,15 +40,30 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { authenticateUser } = useContext(SessionContext);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      user: data.get("user"),
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const submitUser = await axios.post(`${BASE_API_URL}/auth/login`, {username, email, password});
+    console.log(submitUser.data);
+    authenticateUser(submitUser.data.authToken);
+    navigate("/user/profile");
   };
+
+  function handleChange(e) {
+    if (e.target.name === "user") {
+      setUsername(e.target.value);
+    } else if (e.target.name === "password") {
+      setPassword(e.target.value);
+    } else {
+      setEmail(e.target.value);
+    }
+  }
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -91,7 +99,7 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Log in
             </Typography>
             <Box
               component="form"
@@ -103,10 +111,12 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                id="user"
+                id="username"
                 label="Username"
                 name="user"
-                autoComplete="user"
+                autoComplete="username"
+                value={username}
+                onChange={handleChange}
                 autoFocus
               />
               <TextField
@@ -118,6 +128,8 @@ export default function SignInSide() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                value={email}
+                onChange={handleChange}
               />
               <TextField
                 margin="normal"
@@ -128,6 +140,8 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
+                onChange={handleChange}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -139,7 +153,7 @@ export default function SignInSide() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Submit
               </Button>
               <Grid container>
                 <Grid item xs>
@@ -165,3 +179,21 @@ export default function SignInSide() {
     </ThemeProvider>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

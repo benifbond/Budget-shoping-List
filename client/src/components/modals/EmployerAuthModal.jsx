@@ -26,7 +26,7 @@ export default function EmployerAuthModal() {
         onClick={handleClick}
       >
         {<SupervisorAccountOutlinedIcon />}
-        admin
+        Employer
       </Button>
       <Menu
         id="basic-menu"
@@ -42,14 +42,14 @@ export default function EmployerAuthModal() {
           component={NavLink}
           to="/employer/signup"
         >
-          New Admin
+          New Employer
         </MenuItem>
         <MenuItem
           onClick={handleClose}
           component={NavLink}
           to="/employer/login"
         >
-          Admin Login
+          Employer Login
         </MenuItem>
         <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>

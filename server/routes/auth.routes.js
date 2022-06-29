@@ -44,15 +44,9 @@ router.post("/signup", (req, res, next) => {
             email,
           });
         })
-        // .then((user) => {
-        //   Session.create({
-        //     user: user._id,
-        //     createdAt: Date.now(),
-        //   }).then((session) => {
-        //     res.status(201).json({ user, accessToken: session._id });
-        //   });
-        //   return res.status(200).json({ user });
-        // })
+       .then((user)=> {
+        res.status(200).json(user)
+       }) 
         .catch((error) => {
           if (error instanceof mongoose.Error.ValidationError) {
             return res.status(400).json({ errorMessage: error.message });

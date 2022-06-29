@@ -56,6 +56,7 @@ export default function SignInSide() {
       };
 
       function handleChange(e) {
+        console.log(e.target.value)
         if (e.target.name === "user") {
           setUsername(e.target.value);
         } else if (e.target.name === "password") {
@@ -109,6 +110,7 @@ export default function SignInSide() {
               sx={{ mt: 1 }}
             >
               <TextField
+              onChange={handleChange}
                 margin="normal"
                 required
                 fullWidth
@@ -119,6 +121,7 @@ export default function SignInSide() {
                 autoFocus
               />
               <TextField
+              onChange={handleChange}
                 margin="normal"
                 required
                 fullWidth
@@ -129,6 +132,7 @@ export default function SignInSide() {
                 autoFocus
               />
               <TextField
+              onChange={handleChange}
                 margin="normal"
                 required
                 fullWidth

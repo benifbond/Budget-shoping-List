@@ -5,7 +5,7 @@ import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 import { SessionContext } from "../contexts/SessionContext";
 
-import EmloyerLoginMaterial from "../components/EmployerLoginMaterial";
+import EmployerLoginMaterial from "../components/EmployerLoginMaterial";
 
 function EmployerLogin() {
   const [user, setUser] = useState("");
@@ -32,7 +32,7 @@ function EmployerLogin() {
   }
   return (
     <div>
-      <form
+      {/* <form
         onSubmit={(e) => {
           handleSubmit(e);
         }}
@@ -52,9 +52,9 @@ function EmployerLogin() {
           onChange={handleChange}
         />
         <button>Login</button>
-      </form>
+      </form> */}
 
-      {/* <EmployerLoginMaterial /> */}
+      <EmployerLoginMaterial />
 
     </div>
   );

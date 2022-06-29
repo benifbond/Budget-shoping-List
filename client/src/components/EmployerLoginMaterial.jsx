@@ -51,16 +51,16 @@ export default function SignInSide() {
     const submitUser = await axios.post(`${BASE_API_URL}/auth/login`, {username, email, password});
     console.log(submitUser.data);
     authenticateUser(submitUser.data.authToken);
-    navigate("/user/profile");
+    navigate("/employer/profile");
   };
 
   function handleChange(e) {
-    if (e.target.name === "password") {
+    if (e.target.name === "employer") {
       setUsername(e.target.value);
     } 
-    // else if (e.target.name === "employer") {
-    //   setPassword(e.target.value);
-    // } 
+    else if (e.target.name === "password") {
+      setPassword(e.target.value);
+    } 
     else {
       setEmail(e.target.value);
     }
@@ -101,7 +101,7 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Log in
+              Employer Log in
             </Typography>
             <Box
               component="form"
@@ -109,7 +109,7 @@ export default function SignInSide() {
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
-              {/* <TextField
+              <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -120,7 +120,7 @@ export default function SignInSide() {
                 value={username}
                 onChange={handleChange}
                 autoFocus
-              /> */}
+              />
               <TextField
                 margin="normal"
                 required

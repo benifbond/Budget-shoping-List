@@ -4,6 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 
+import EmployerSignupMaterial from '../components/UserSignupMaterial'
+
 const EmployerSignup = () => {
   // const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
@@ -36,7 +38,7 @@ const EmployerSignup = () => {
 
   return (
     <div>
-      <form
+      {/* <form
         onSubmit={(e) => {
           handleSubmit(e);
         }}
@@ -63,7 +65,10 @@ const EmployerSignup = () => {
           onChange={handleChange}
         />
         <button>submit</button>
-      </form>
+      </form> */}
+
+      <EmployerSignupMaterial />
+
     </div>
   );
 };

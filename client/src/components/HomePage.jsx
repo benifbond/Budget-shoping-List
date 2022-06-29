@@ -30,16 +30,11 @@ function Copyright(props) {
         Rob & Ben
       </Link>{" "}
       {new Date().getFullYear()}
-<<<<<<< HEAD
       {"."}
       <AvatarGroup>
         <Avatar alt="Robert" src="/static/images/avatar/1.jpg" />
         <Avatar alt="Beniah" src="/static/images/avatar/2.jpg" />
       </AvatarGroup>
-=======
-      {'.'}
-
->>>>>>> 0f3a379d6b8e30f36b710612c444d5214434b35e
     </Typography>
   );
 }

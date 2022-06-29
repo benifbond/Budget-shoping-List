@@ -57,29 +57,9 @@ router.post("/signup", (req, res, next) => {
             errorMessage:
               "Username need to be unique. The username you chose is already in use.",
           });
-<<<<<<< HEAD
         }
         return res.status(500).json({ errorMessage: error.message });
       });
-=======
-        })
-       .then((user)=> {
-        res.status(200).json(user)
-       }) 
-        .catch((error) => {
-          if (error instanceof mongoose.Error.ValidationError) {
-            return res.status(400).json({ errorMessage: error.message });
-          }
-          if (error.code === 11000) {
-            return res.status(400).json({
-              errorMessage:
-                "Username need to be unique. The username you chose is already in use.",
-            });
-          }
-          return res.status(500).json({ errorMessage: error.message });
-        })
-    );
->>>>>>> 0f3a379d6b8e30f36b710612c444d5214434b35e
   });
 });
 

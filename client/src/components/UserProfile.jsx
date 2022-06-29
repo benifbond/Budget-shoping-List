@@ -15,13 +15,9 @@ import Skeleton from "@mui/material/Skeleton";
 <Skeleton variant="circular" width={40} height={40} />;
 
 function UserProfile() {
-<<<<<<< HEAD
   const [jobs, setJobs] = useState(null);
   const [loading, setLoading] = useState(true);
 
-=======
-  const [jobs, setJobs] = useState([]);
->>>>>>> 0f3a379d6b8e30f36b710612c444d5214434b35e
   const { token } = useContext(SessionContext);
   //////////////NEW////
 

@@ -12,16 +12,12 @@ export default function Layout({ children }) {
   const [value, setValue] = React.useState(0);
 
   return (
-<<<<<<< HEAD
     <Box
       sx={{
         width: "auto",
         margin: " 20px",
       }}
     >
-=======
-    <Box sx={{ width: 1000 }}>
->>>>>>> 0f3a379d6b8e30f36b710612c444d5214434b35e
       <BottomNavigation
         showLabels
         value={value}

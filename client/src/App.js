@@ -29,7 +29,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/user/profile" element={<UserProfile />} />
           <Route path="/signup" element={<UserSignup />} />
-          <Route path="/login" element={<UserLogin />} />
+          <Route path="/user/login" element={<UserLogin />} />
 
           <Route
             path="/bars/:barId"

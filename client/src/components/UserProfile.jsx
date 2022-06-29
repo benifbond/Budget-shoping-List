@@ -1,32 +1,22 @@
 import React from "react";
-
-import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-
-import IconButton from "@mui/material/IconButton";
 
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-
 import { SessionContext } from "../contexts/SessionContext";
-import axios from "axios";
+
 import { BASE_API_URL } from "../utils/constants";
 import { Container } from "@mui/material";
 
 ///////////////NEW/////////
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+
+import Skeleton from "@mui/material/Skeleton";
+
+<Skeleton variant="circular" width={40} height={40} />;
 
 function UserProfile() {
   const [jobs, setJobs] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const { token } = useContext(SessionContext);
   //////////////NEW////
@@ -38,9 +28,11 @@ function UserProfile() {
         Authorization: `Bearer ${token}`,
       },
     });
+
     const data = await response.json();
     console.log(data);
     setJobs(data.jobOffers);
+    setLoading(false);
 
     // axios
     //   .get(`${BASE_API_URL}/api/jobs`)
@@ -54,11 +46,12 @@ function UserProfile() {
   useEffect(() => {
     getAllJobs();
   }, []);
-  if (!jobs) {
-    <p>Looding</p>;
+  if (loading) {
+    return <Skeleton variant="rectangular" width="100%" height="100%" />;
   }
   return (
     <div>
+      <h1>UserpROFILE </h1>
       <React.Fragment>
         {jobs &&
           jobs.map((job) => {

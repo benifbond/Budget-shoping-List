@@ -16,8 +16,8 @@ const Job = require("../models/Job.model");
 const Employer = require("../models/Employer.model");
 
 router.post("/employer/signup", (req, res) => {
-  const { password, email } = req.body;
-  console.log("here is signup");
+  const { password, email, name } = req.body;
+  console.log("here is signup", req.body);
   if (!email) {
     return res
       .status(400)
@@ -39,6 +39,7 @@ router.post("/employer/signup", (req, res) => {
         // Create a user and save it in the database
         return Employer.create({
           email,
+          username: name,
 
           password: hashedPassword,
         });

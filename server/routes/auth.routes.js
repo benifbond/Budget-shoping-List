@@ -34,40 +34,32 @@ router.post("/signup", (req, res, next) => {
     }
 
     // if user is not found, create a new user - start with hashing the password
-    return (
-      bcrypt
-        .genSalt(saltRounds)
-        .then((salt) => bcrypt.hash(password, salt))
-        .then((hashedPassword) => {
-          // Create a user and save it in the database
-          return User.create({
-            username,
-            password: hashedPassword,
-            email,
+    return bcrypt
+      .genSalt(saltRounds)
+      .then((salt) => bcrypt.hash(password, salt))
+      .then((hashedPassword) => {
+        // Create a user and save it in the database
+        return User.create({
+          username,
+          password: hashedPassword,
+          email,
+        }).then((user) => {
+          res.status(200).json(user);
+        });
+      })
+
+      .catch((error) => {
+        if (error instanceof mongoose.Error.ValidationError) {
+          return res.status(400).json({ errorMessage: error.message });
+        }
+        if (error.code === 11000) {
+          return res.status(400).json({
+            errorMessage:
+              "Username need to be unique. The username you chose is already in use.",
           });
-        })
-        // .then((user) => {
-        //   Session.create({
-        //     user: user._id,
-        //     createdAt: Date.now(),
-        //   }).then((session) => {
-        //     res.status(201).json({ user, accessToken: session._id });
-        //   });
-        //   return res.status(200).json({ user });
-        // })
-        .catch((error) => {
-          if (error instanceof mongoose.Error.ValidationError) {
-            return res.status(400).json({ errorMessage: error.message });
-          }
-          if (error.code === 11000) {
-            return res.status(400).json({
-              errorMessage:
-                "Username need to be unique. The username you chose is already in use.",
-            });
-          }
-          return res.status(500).json({ errorMessage: error.message });
-        })
-    );
+        }
+        return res.status(500).json({ errorMessage: error.message });
+      });
   });
 });
 

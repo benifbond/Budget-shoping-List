@@ -17,7 +17,7 @@ const Employer = require("../models/Employer.model");
 
 router.post("/employer/signup", (req, res) => {
   const { password, email, name } = req.body;
-  console.log("here is signup", req.body);
+  console.log("here is employer signup", req.body);
   if (!email) {
     return res
       .status(400)

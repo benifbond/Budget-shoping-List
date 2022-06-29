@@ -54,7 +54,7 @@ function EmployerLogin() {
         <button>Login</button>
       </form> */}
 
-      <EmployerLoginMaterial />
+      {/* <EmployerLoginMaterial /> */}
 
     </div>
   );

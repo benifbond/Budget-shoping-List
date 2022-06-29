@@ -17,27 +17,24 @@ import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import ThreeDRotation from "@mui/icons-material/ThreeDRotation";
 import { AvatarGroup } from "@mui/material";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Rob & Ben
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-      <AvatarGroup>
-        <Avatar alt="Robert" src="/static/images/avatar/1.jpg" />
-        <Avatar alt="Beniah" src="/static/images/avatar/2.jpg" />
-      </AvatarGroup>
-    </Typography>
-  );
-}
+// function Copyright(props) {
+//   return (
+//     <Typography
+//       variant="body2"
+//       color="text.secondary"
+//       align="center"
+//       {...props}
+//     >
+//       {"Copyright © "}
+//       <Link color="inherit" href="https://mui.com/">
+//         Rob & Ben
+//       </Link>{" "}
+//       {new Date().getFullYear()}
+//       {"."}
+      
+//     </Typography>
+//   );
+// }
 
 const theme = createTheme();
 
@@ -54,13 +51,13 @@ export default function SignInSide() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid container component="main" sx={{ height: "90vh" }}>
         <CssBaseline />
         <Grid
           item
           xs={false}
           sm={4}
-          md={7}
+          md={12}
           sx={{
             backgroundImage: "url(https://source.unsplash.com/random)",
             backgroundRepeat: "no-repeat",
@@ -72,8 +69,9 @@ export default function SignInSide() {
             backgroundPosition: "center",
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
+        {/* <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square> */}
+        
+          {/* <Box
             sx={{
               my: 8,
               mx: 4,
@@ -87,8 +85,10 @@ export default function SignInSide() {
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
-            </Typography>
-            <Box
+            </Typography> */}
+
+
+            {/* <Box
               component="form"
               noValidate
               onSubmit={handleSubmit}
@@ -153,9 +153,10 @@ export default function SignInSide() {
                 <Avatar alt="Robert" src="../images/avatar/20200922_171011.jpg" />
                 <Avatar alt="Beniah" src="/static/images/avatar/2.jpg" />
               </AvatarGroup>
-            </Box>
-          </Box>
-        </Grid>
+            </Box> */}
+
+          {/* </Box> */}
+        {/* </Grid> */}
       </Grid>
     </ThemeProvider>
   );

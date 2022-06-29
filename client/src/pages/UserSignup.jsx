@@ -85,7 +85,7 @@ const UserSignup = () => {
         <button>Submit</button>
       </form> */}
 
-      <UserSignupMaterial />
+      {/* <UserSignupMaterial /> */}
 
     </div>
   );

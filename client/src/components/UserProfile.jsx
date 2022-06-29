@@ -36,10 +36,7 @@ function UserProfile() {
     const data = await response.json();
     console.log(data);
     setJobs(data.jobOffers);
-<<<<<<< HEAD
     setLoading(false);
-=======
->>>>>>> 0f3a379d6b8e30f36b710612c444d5214434b35e
 
     // axios
     //   .get(`${BASE_API_URL}/api/jobs`)
@@ -53,7 +50,6 @@ function UserProfile() {
   useEffect(() => {
     getAllJobs();
   }, []);
-<<<<<<< HEAD
   if (loading) {
     return <Skeleton variant="rectangular" width="100%" height="100%" />;
   }
@@ -75,44 +71,6 @@ function UserProfile() {
             );
           })}
       </React.Fragment>
-=======
-
-  return (
-    <div>
-      <h1>Profil</h1>
-      {jobs &&
-        jobs.map((job) => {
-          return (
-            <React.Fragment key={job._id}>
-              <CssBaseline />
-              <Paper square sx={{ pb: "50px" }}>
-                <Typography
-                  variant="h5"
-                  gutterBottom
-                  component="div"
-                  sx={{ p: 2, pb: 0 }}
-                >
-                  Recent Jobs
-                </Typography>
-                <List sx={{ mb: 2 }}>
-                  <React.Fragment>
-                    <ListItem button>
-                      <h1>{job.title}</h1>
-                      <ListItemAvatar>
-                        <Avatar alt="Profile Picture" />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={job.description}
-                        secondary={job.price}
-                      />
-                    </ListItem>
-                  </React.Fragment>
-                </List>
-              </Paper>
-            </React.Fragment>
-          );
-        })}
->>>>>>> 0f3a379d6b8e30f36b710612c444d5214434b35e
     </div>
   );
 }

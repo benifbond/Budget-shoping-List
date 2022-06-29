@@ -55,11 +55,13 @@ export default function SignInSide() {
   };
 
   function handleChange(e) {
-    if (e.target.name === "user") {
+    if (e.target.name === "password") {
       setUsername(e.target.value);
-    } else if (e.target.name === "password") {
-      setPassword(e.target.value);
-    } else {
+    } 
+    // else if (e.target.name === "employer") {
+    //   setPassword(e.target.value);
+    // } 
+    else {
       setEmail(e.target.value);
     }
   }
@@ -107,7 +109,7 @@ export default function SignInSide() {
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
-              <TextField
+              {/* <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -118,7 +120,7 @@ export default function SignInSide() {
                 value={username}
                 onChange={handleChange}
                 autoFocus
-              />
+              /> */}
               <TextField
                 margin="normal"
                 required

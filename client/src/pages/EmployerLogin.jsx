@@ -3,26 +3,22 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
-
 import { SessionContext } from "../contexts/SessionContext";
 
+import EmloyerLoginMaterial from "../components/EmployerLoginMaterial";
+
 function EmployerLogin() {
-  // const [user, setUser] = useState("");
-  const { authenticateUser, verifyAuth } = useContext(SessionContext);
+  const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const { authenticateUser, verifyAuth } = useContext(SessionContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newUser = { email, password };
-    const submitUser = await axios.post(
-      `${BASE_API_URL}/api/employer/login`,
-      newUser
-    );
+    const submitUser = await axios.post(`${BASE_API_URL}/api/employer/login`,newUser);
     authenticateUser(submitUser.data.authToken);
-
     verifyAuth();
     navigate("/employer/profile");
   };
@@ -57,6 +53,9 @@ function EmployerLogin() {
         />
         <button>Login</button>
       </form>
+
+      {/* <EmployerLoginMaterial /> */}
+
     </div>
   );
 }

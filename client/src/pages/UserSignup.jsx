@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 
+
 import UserSignupMaterial from '../components/UserSignupMaterial'
 
 //<<<<<<<<<<<<<<<IMPORT from M-UI>>>>>>>>>>>>>>>
@@ -38,9 +39,9 @@ const UserSignup = () => {
     e.preventDefault();
     let newUser = { username: user, email, password };
     const submitUser = await axios.post(`${BASE_API_URL}/auth/signup`, newUser);
-    navigate("/user/login");
     console.log(submitUser.data);
-  };
+    navigate("/user/login");
+      };
 
   function handleChange(e) {
     if (e.target.name === "username") {
@@ -54,7 +55,7 @@ const UserSignup = () => {
 
   return (
     <div>
-      <form
+      {/* <form
         onSubmit={(e) => {
           handleSubmit(e);
         }}
@@ -81,8 +82,8 @@ const UserSignup = () => {
           required
           onChange={handleChange}
         />
-        <button>submit</button>
-      </form>
+        <button>Submit</button>
+      </form> */}
 
       <UserSignupMaterial />
 

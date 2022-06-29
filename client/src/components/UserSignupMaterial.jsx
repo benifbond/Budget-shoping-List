@@ -1,9 +1,3 @@
-// import React from "react";
-
-// function HomePage() {
-//   return <div></div>;
-// }
-// export default HomePage;
 
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -23,6 +17,11 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
 import { AvatarGroup } from '@mui/material';
 
+import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { SessionContext } from "../contexts/SessionContext";
+import axios from "axios";
+import { BASE_API_URL } from "../utils/constants";
 
 function Copyright(props) {
   return (
@@ -41,15 +40,31 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const [user, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { authenticateUser } = useContext(SessionContext);
+  const navigate = useNavigate();
+
+ 
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      user: data.get('user'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+    let newUser = { username: user, email, password };
+    const submitUser = await axios.post(`${BASE_API_URL}/auth/signup`, newUser);
+    console.log(submitUser.data);
+    navigate("/user/login");
+      };
+
+      function handleChange(e) {
+        if (e.target.name === "user") {
+          setUsername(e.target.value);
+        } else if (e.target.name === "password") {
+          setPassword(e.target.value);
+        } else {
+          setEmail(e.target.value);
+        }
+      }
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -97,10 +112,10 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                id="user"
+                id="username"
                 label="Username"
                 name="user"
-                autoComplete="user"
+                autoComplete="username"
                 autoFocus
               />
               <TextField
@@ -133,7 +148,7 @@ export default function SignInSide() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Submit
               </Button>
               <Grid container>
                 <Grid item xs>

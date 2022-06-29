@@ -12,7 +12,7 @@ export default function Layout({ children }) {
   const [value, setValue] = React.useState(0);
 
   return (
-    <Box sx={{ width: 1900 }}>
+    <Box sx={{ width: 1000 }}>
       <BottomNavigation
         showLabels
         value={value}

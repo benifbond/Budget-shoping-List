@@ -4,9 +4,7 @@ import { Route, Routes } from "react-router-dom";
 
 import Layout from "./components/Layout";
 import PrivateRoute from "./components/PrivateRoute";
-// import { BeersContextProvider } from "./contexts/BeersContext";
 
-// import BarDetailsPage from "./pages/BarDetailsPage";
 
 import ErrorPage from "./pages/ErrorPage";
 import UserLogin from "./pages/UserLogin";
@@ -17,6 +15,8 @@ import EmployerSignup from "./pages/EmployerSignup";
 import EmployerLogin from "./pages/EmployerLogin";
 import PostJob from "./components/PostJob";
 import EmployerProfile from "./components/EmployerProfile";
+
+
 function App() {
   return (
     // <BeersContextProvider>

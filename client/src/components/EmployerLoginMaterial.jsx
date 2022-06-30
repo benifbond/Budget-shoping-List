@@ -115,7 +115,7 @@ export default function SignInSide() {
                 fullWidth
                 id="username"
                 label="Username"
-                name="user"
+                name="employer"
                 autoComplete="username"
                 value={username}
                 onChange={handleChange}

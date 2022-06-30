@@ -57,9 +57,11 @@ export default function SignInSide() {
   function handleChange(e) {
     if (e.target.name === "user") {
       setUsername(e.target.value);
-    } else if (e.target.name === "password") {
+    }
+    else if (e.target.name === "password") {
       setPassword(e.target.value);
-    } else {
+    }
+    else {
       setEmail(e.target.value);
     }
   }

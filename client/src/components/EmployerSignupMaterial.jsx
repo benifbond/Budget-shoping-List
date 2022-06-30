@@ -101,7 +101,7 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Employer Sign in
+              Employer Sign up
             </Typography>
             <Box
               component="form"

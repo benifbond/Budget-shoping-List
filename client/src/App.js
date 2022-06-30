@@ -8,13 +8,13 @@ import ErrorPage from "./pages/ErrorPage";
 // import UserLogin from "./pages/UserLogin";
 import UserLoginMaterial from './components/UserLoginMaterial'
 // import UserSignup from "./pages/UserSignup";
-import UserSignupMaterial from './components/EmployerSignupMaterial'
+import UserSignupMaterial from './components/UserSignupMaterial'
 import UserProfile from "./components/UserProfile";
 import HomePage from "./components/HomePage";
 // import EmployerSignup from "./pages/EmployerSignup";
 import EmployerSignupMaterial from './components/EmployerSignupMaterial'
 // import EmployerLogin from "./pages/EmployerLogin";
-import EmployerLoginMaterial from './components/UserLoginMaterial.jsx'
+import EmployerLoginMaterial from './components/EmployerLoginMaterial.jsx'
 import PostJob from "./components/PostJob";
 import EmployerProfile from "./components/EmployerProfile";
 

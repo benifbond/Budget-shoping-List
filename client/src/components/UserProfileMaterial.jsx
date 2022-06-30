@@ -44,8 +44,6 @@ function Copyright(props) {
     </Typography>
   );
 }
-<<<<<<< HEAD
-=======
 // function Copyright(props) {
 //   return (
 //     <Typography
@@ -64,7 +62,6 @@ function Copyright(props) {
 //     </Typography>
 //   );
 // }
->>>>>>> e5866e4c2ba3e5db43f85ec61ccef35fc456c337
 
 const theme = createTheme();
 
@@ -99,8 +96,6 @@ export default function SignInSide() {
             backgroundPosition: "center",
           }}
         />
-<<<<<<< HEAD
-=======
         {/* <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square> */}
         
           {/* <Box
@@ -192,7 +187,6 @@ export default function SignInSide() {
 
           {/* </Box> */}
         {/* </Grid> */}
->>>>>>> e5866e4c2ba3e5db43f85ec61ccef35fc456c337
       </Grid>
     </ThemeProvider>
   );

@@ -43,6 +43,7 @@ function App() {
           />
           <Route path="/signup" element={<UserSignupMaterial />} />
           <Route path="/user/login" element={<UserLoginMaterial />} />
+          <Route path="/beers" element={<PrivateRoute></PrivateRoute>} />
           <Route
             path="/updatejob/:jobId"
             element={

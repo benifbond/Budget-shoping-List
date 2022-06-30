@@ -9,6 +9,8 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { BASE_API_URL } from "../utils/constants";
 import { Button, Container } from "@mui/material";
 
+import UserProfileMaterial from './UserProfileMaterial'
+
 ///////////////NEW/////////
 
 import Skeleton from "@mui/material/Skeleton";
@@ -90,7 +92,10 @@ function UserProfile() {
 
       <Button>logout</Button>
       {/* <Button onClick={() => interestedJobNavigate()}> Favourite jobs</Button> */}
-      <Link to="/favouriteJobs"> Favouirte Jobs</Link>
+      <Link to="/favouriteJobs"> Favourite Jobs</Link>
+      
+      <UserProfileMaterial />
+
     </div>
   );
 }

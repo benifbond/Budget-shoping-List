@@ -5,34 +5,34 @@ import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 import { SessionContext } from "../contexts/SessionContext";
 
-import EmloyerLoginMaterial from "../components/EmployerLoginMaterial";
+import EmployerLoginMaterial from "../components/EmployerLoginMaterial";
 
-function EmployerLogin() {
-  const [user, setUser] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { authenticateUser, verifyAuth } = useContext(SessionContext);
-  const navigate = useNavigate();
+// function EmployerLogin() {
+//   const [user, setUser] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const { authenticateUser, verifyAuth } = useContext(SessionContext);
+//   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let newUser = { email, password };
-    const submitUser = await axios.post(`${BASE_API_URL}/api/employer/login`,newUser);
-    authenticateUser(submitUser.data.authToken);
-    verifyAuth();
-    navigate("/employer/profile");
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   let newUser = { email, password };
+  //   const submitUser = await axios.post(`${BASE_API_URL}/api/employer/login`,newUser);
+  //   authenticateUser(submitUser.data.authToken);
+  //   verifyAuth();
+  //   navigate("/employer/profile");
+  // };
 
-  function handleChange(e) {
-    if (e.target.name === "password") {
-      setPassword(e.target.value);
-    } else {
-      setEmail(e.target.value);
-    }
-  }
-  return (
-    <div>
-      <form
+  // function handleChange(e) {
+  //   if (e.target.name === "password") {
+  //     setPassword(e.target.value);
+  //   } else {
+  //     setEmail(e.target.value);
+  //   }
+  // }
+  // return (
+  //   <div>
+      {/* <form
         onSubmit={(e) => {
           handleSubmit(e);
         }}
@@ -52,12 +52,12 @@ function EmployerLogin() {
           onChange={handleChange}
         />
         <button>Login</button>
-      </form>
+      </form> */}
 
       {/* <EmployerLoginMaterial /> */}
 
-    </div>
-  );
-}
+//     </div>
+//   );
+// }
 
-export default EmployerLogin;
+// export default EmployerLogin;

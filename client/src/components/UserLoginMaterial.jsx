@@ -57,9 +57,11 @@ export default function SignInSide() {
   function handleChange(e) {
     if (e.target.name === "user") {
       setUsername(e.target.value);
-    } else if (e.target.name === "password") {
+    }
+    else if (e.target.name === "password") {
       setPassword(e.target.value);
-    } else {
+    }
+    else {
       setEmail(e.target.value);
     }
   }
@@ -67,7 +69,7 @@ export default function SignInSide() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid container component="main" sx={{ height: "90vh" }}>
         <CssBaseline />
         <Grid
           item
@@ -99,7 +101,7 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Log in
+              User Log in
             </Typography>
             <Box
               component="form"

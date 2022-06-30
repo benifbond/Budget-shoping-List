@@ -17,7 +17,7 @@ const Job = require("../models/Job.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 router.post("/signup", (req, res, next) => {
-  console.log("the testing route", req.body);
+  console.log("here is user signup", req.body);
   const { email, username, password } = req.body;
 
   if (!username) {

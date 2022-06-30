@@ -17,7 +17,7 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
 import { AvatarGroup } from '@mui/material';
 
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { SessionContext } from "../contexts/SessionContext";
 import axios from "axios";
@@ -40,31 +40,31 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const [username, setUsername] = useState("");
+  const [user, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { authenticateUser } = useContext(SessionContext);
   const navigate = useNavigate();
 
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const submitUser = await axios.post(`${BASE_API_URL}/auth/login`, {username, email, password});
+    let newUser = { username: user, email, password };
+    const submitUser = await axios.post(`${BASE_API_URL}/api/employer/signup`, newUser);
     console.log(submitUser.data);
-    authenticateUser(submitUser.data.authToken);
     navigate("/employer/profile");
-  };
+      };
 
-  function handleChange(e) {
-    if (e.target.name === "employer") {
-      setUsername(e.target.value);
-    } 
-    else if (e.target.name === "password") {
-      setPassword(e.target.value);
-    } 
-    else {
-      setEmail(e.target.value);
-    }
-  }
+      function handleChange(e) {
+        console.log(e.target.value)
+        if (e.target.name === "user") {
+          setUsername(e.target.value);
+        } else if (e.target.name === "password") {
+          setPassword(e.target.value);
+        } else {
+          setEmail(e.target.value);
+        }
+      }
 
 
   return (
@@ -101,7 +101,7 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Employer Log in
+              Employer Sign up
             </Typography>
             <Box
               component="form"
@@ -110,18 +110,18 @@ export default function SignInSide() {
               sx={{ mt: 1 }}
             >
               <TextField
+              onChange={handleChange}
                 margin="normal"
                 required
                 fullWidth
                 id="username"
                 label="Username"
-                name="employer"
+                name="user"
                 autoComplete="username"
-                value={username}
-                onChange={handleChange}
                 autoFocus
               />
               <TextField
+              onChange={handleChange}
                 margin="normal"
                 required
                 fullWidth
@@ -130,10 +130,9 @@ export default function SignInSide() {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                value={email}
-                onChange={handleChange}
               />
               <TextField
+              onChange={handleChange}
                 margin="normal"
                 required
                 fullWidth
@@ -142,8 +141,6 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={password}
-                onChange={handleChange}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

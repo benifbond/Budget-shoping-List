@@ -130,12 +130,22 @@ router.get("/verify", isAuthenticated, (req, res) => {
 });
 
 router.post("/likejobs", isAuthenticated, async (req, res) => {
-  console.log("this is the payload", req.body[0]._id);
+  let currentUser = await User.findById(req.payload._id);
+  if (currentUser.applyJobs.includes(req.body[0]._id)) {
+    res.status(200).json({ message: "you have already liked this job" });
+  } else {
+    let response = await User.findByIdAndUpdate(req.payload._id, {
+      $push: { applyJobs: req.body[0]._id },
+    });
+    res.status(200).json(response);
+  }
+});
 
-  let response = await User.findByIdAndUpdate(req.payload._id, {
-    $push: { applyJobs: req.body[0]._id },
-  });
-  res.status(200).json(response);
+router.get("/favouritejobs", isAuthenticated, async (req, res) => {
+  const currentUser = await User.findById(req.payload._id).populate(
+    "applyJobs"
+  );
+  res.status(200).json(currentUser);
 });
 
 ////////////////////cloudinary setup ////////////////

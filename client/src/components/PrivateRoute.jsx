@@ -3,10 +3,14 @@ import { Navigate } from "react-router-dom";
 import { SessionContext } from "../contexts/SessionContext";
 
 const PrivateRoute = ({ children }) => {
-  const { isAuthenticated } = useContext(SessionContext);
+  const { isAuthenticated, isVerified } = useContext(SessionContext);
+
+  if (!isVerified) {
+    return <p> loading</p>;
+  }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/user/login" />;
   }
 
   return <>{children}</>;

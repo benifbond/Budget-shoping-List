@@ -14,6 +14,8 @@ import EmployerLogin from "./pages/EmployerLogin";
 import PostJob from "./components/PostJob";
 import EmployerProfile from "./components/EmployerProfile";
 
+import FavouriteJobs from "./components/FavouriteJobs";
+
 function App() {
   return (
     // <BeersContextProvider>
@@ -28,7 +30,14 @@ function App() {
           <Route path="/user/profile" element={<UserProfile />} />
           <Route path="/signup" element={<UserSignup />} />
           <Route path="/user/login" element={<UserLogin />} />
-          <Route path="/beers" element={<PrivateRoute></PrivateRoute>} />
+          <Route
+            path="/favouriteJobs"
+            element={
+              <PrivateRoute>
+                <FavouriteJobs />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/bars/:barId"
             element={<PrivateRoute>{/* <BarDetailsPage /> */}</PrivateRoute>}

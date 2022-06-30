@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "@mui/material/Card";
 
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { SessionContext } from "../contexts/SessionContext";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -12,8 +12,6 @@ import { Button, Container } from "@mui/material";
 ///////////////NEW/////////
 
 import Skeleton from "@mui/material/Skeleton";
-
-<Skeleton variant="circular" width={40} height={40} />;
 
 function UserProfile() {
   const [jobs, setJobs] = useState(null);
@@ -89,7 +87,10 @@ function UserProfile() {
             );
           })}
       </React.Fragment>
+
       <Button>logout</Button>
+      {/* <Button onClick={() => interestedJobNavigate()}> Favourite jobs</Button> */}
+      <Link to="/favouriteJobs"> Favouirte Jobs</Link>
     </div>
   );
 }

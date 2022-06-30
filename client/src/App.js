@@ -32,9 +32,7 @@ function App() {
           <Route path="/employer/login" element={<EmployerLoginMaterial />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/user/profile" element={<UserProfile />} />
-<<<<<<< HEAD
-          <Route path="/signup" element={<UserSignup />} />
-          <Route path="/user/login" element={<UserLogin />} />
+          
           <Route
             path="/favouriteJobs"
             element={
@@ -43,11 +41,9 @@ function App() {
               </PrivateRoute>
             }
           />
-=======
           <Route path="/signup" element={<UserSignupMaterial />} />
           <Route path="/user/login" element={<UserLoginMaterial />} />
           <Route path="/beers" element={<PrivateRoute></PrivateRoute>} />
->>>>>>> 246f9e4e6dc4d932c49cb45b475ca474263ea5a4
           <Route
             path="/bars/:barId"
             element={<PrivateRoute>{/* <BarDetailsPage /> */}</PrivateRoute>}

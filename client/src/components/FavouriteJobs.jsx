@@ -3,6 +3,8 @@ import { BASE_API_URL } from "../utils/constants";
 import { SessionContext } from "../contexts/SessionContext";
 import { useState, useEffect, useContext } from "react";
 
+import FavouriteJobsMaterial from './FavouriteJobsMaterial'
+
 function FavouriteJob() {
   const [likeJobs, setLikeJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,6 +32,9 @@ function FavouriteJob() {
       {likeJobs.map((likejob, index) => {
         return <h3>{likejob.title}</h3>;
       })}
+
+<FavouriteJobsMaterial />
+
     </div>
   );
 }

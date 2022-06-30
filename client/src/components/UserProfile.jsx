@@ -9,7 +9,7 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { BASE_API_URL } from "../utils/constants";
 import { Button, Container } from "@mui/material";
 
-import UserProfileMaterial from './UserProfileMaterial'
+import UserProfileMaterial from "./UserProfileMaterial";
 
 ///////////////NEW/////////
 
@@ -18,6 +18,7 @@ import Skeleton from "@mui/material/Skeleton";
 function UserProfile() {
   const [jobs, setJobs] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const { token } = useContext(SessionContext);
   //////////////NEW////
@@ -43,6 +44,10 @@ function UserProfile() {
     //   })
     //   .catch((error) => console.log(error));
   };
+
+  function handleFavourite() {
+    navigate("/favouriteJobs");
+  }
 
   async function handleInterest(jobId) {
     let filterJobs = jobs.filter((job) => {
@@ -80,6 +85,9 @@ function UserProfile() {
                   <div>
                     <p>{job.location}</p>
                   </div>
+                  <div>
+                    <i>€{job.salary}</i>
+                  </div>
                   <Button onClick={() => handleInterest(job._id)}>
                     {<ThumbUpIcon />}
                     Like
@@ -91,11 +99,8 @@ function UserProfile() {
       </React.Fragment>
 
       <Button>logout</Button>
-      {/* <Button onClick={() => interestedJobNavigate()}> Favourite jobs</Button> */}
-      <Link to="/favouriteJobs"> Favourite Jobs</Link>
-      
-      <UserProfileMaterial />
 
+      <Button onClick={() => handleFavourite()}> Favourite Jobs</Button>
     </div>
   );
 }

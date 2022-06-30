@@ -129,6 +129,15 @@ router.get("/verify", isAuthenticated, (req, res) => {
   res.status(200).json(req.payload);
 });
 
+router.post("/likejobs", isAuthenticated, async (req, res) => {
+  console.log("this is the payload", req.body[0]._id);
+
+  let response = await User.findByIdAndUpdate(req.payload._id, {
+    $push: { applyJobs: req.body[0]._id },
+  });
+  res.status(200).json(response);
+});
+
 ////////////////////cloudinary setup ////////////////
 
 module.exports = router;

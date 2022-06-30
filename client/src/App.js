@@ -6,15 +6,15 @@ import PrivateRoute from "./components/PrivateRoute";
 
 import ErrorPage from "./pages/ErrorPage";
 // import UserLogin from "./pages/UserLogin";
-import UserLoginMaterial from './components/UserLoginMaterial'
+import UserLoginMaterial from "./components/UserLoginMaterial";
 // import UserSignup from "./pages/UserSignup";
-import UserSignupMaterial from './components/UserSignupMaterial'
+import UserSignupMaterial from "./components/UserSignupMaterial";
 import UserProfile from "./components/UserProfile";
 import HomePage from "./components/HomePage";
 // import EmployerSignup from "./pages/EmployerSignup";
-import EmployerSignupMaterial from './components/EmployerSignupMaterial'
+import EmployerSignupMaterial from "./components/EmployerSignupMaterial";
 // import EmployerLogin from "./pages/EmployerLogin";
-import EmployerLoginMaterial from './components/EmployerLoginMaterial.jsx'
+import EmployerLoginMaterial from "./components/EmployerLoginMaterial.jsx";
 import PostJob from "./components/PostJob";
 import EmployerProfile from "./components/EmployerProfile";
 
@@ -32,9 +32,6 @@ function App() {
           <Route path="/employer/login" element={<EmployerLoginMaterial />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/user/profile" element={<UserProfile />} />
-<<<<<<< HEAD
-          <Route path="/signup" element={<UserSignup />} />
-          <Route path="/user/login" element={<UserLogin />} />
           <Route
             path="/favouriteJobs"
             element={
@@ -43,11 +40,9 @@ function App() {
               </PrivateRoute>
             }
           />
-=======
           <Route path="/signup" element={<UserSignupMaterial />} />
           <Route path="/user/login" element={<UserLoginMaterial />} />
           <Route path="/beers" element={<PrivateRoute></PrivateRoute>} />
->>>>>>> 246f9e4e6dc4d932c49cb45b475ca474263ea5a4
           <Route
             path="/bars/:barId"
             element={<PrivateRoute>{/* <BarDetailsPage /> */}</PrivateRoute>}

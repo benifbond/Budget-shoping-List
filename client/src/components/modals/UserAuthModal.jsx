@@ -37,11 +37,11 @@ export default function EmployerAuthModal() {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose} component={NavLink} to="/user/login">
-          User Login
-        </MenuItem>
         <MenuItem onClick={handleClose} component={NavLink} to="/signup">
           New User
+        </MenuItem>
+        <MenuItem onClick={handleClose} component={NavLink} to="/user/login">
+          User Login
         </MenuItem>
       </Menu>
     </div>

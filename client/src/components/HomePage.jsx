@@ -4,6 +4,30 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+<<<<<<< HEAD
+=======
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Rob & Ben
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+      <AvatarGroup>
+        <Avatar alt="Robert" src="/static/images/avatar/1.jpg" />
+        <Avatar alt="Beniah" src="/static/images/avatar/2.jpg" />
+      </AvatarGroup>
+    </Typography>
+  );
+}
+>>>>>>> 32af7dc242c449160b3346f3ba96ccf195be90d1
 
 const theme = createTheme();
 
@@ -32,7 +56,11 @@ export default function SignInSide() {
             backgroundPosition: "center",
           }}
         />
+<<<<<<< HEAD
         </Grid>
+=======
+      </Grid>
+>>>>>>> 32af7dc242c449160b3346f3ba96ccf195be90d1
     </ThemeProvider>
   );
 }

@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const jobSchema = new Schema({
   title: String,
   description: String,
-  salary: { type: Number },
+  salary: String,
   location: {
     type: String,
     default: "unknown",

@@ -1,21 +1,20 @@
-
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
-import { AvatarGroup } from '@mui/material';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import ThreeDRotation from "@mui/icons-material/ThreeDRotation";
+import { AvatarGroup } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
@@ -25,14 +24,18 @@ import { BASE_API_URL } from "../utils/constants";
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Rob & Ben
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
-
+      {"."}
     </Typography>
   );
 }
@@ -46,26 +49,27 @@ export default function SignInSide() {
   const { authenticateUser } = useContext(SessionContext);
   const navigate = useNavigate();
 
- 
   const handleSubmit = async (event) => {
     event.preventDefault();
     let newUser = { username: user, email, password };
-    const submitUser = await axios.post(`${BASE_API_URL}/api/employer/signup`, newUser);
+    const submitUser = await axios.post(
+      `${BASE_API_URL}/api/employer/signup`,
+      newUser
+    );
     console.log(submitUser.data);
     navigate("/employer/profile");
-      };
+  };
 
-      function handleChange(e) {
-        console.log(e.target.value)
-        if (e.target.name === "user") {
-          setUsername(e.target.value);
-        } else if (e.target.name === "password") {
-          setPassword(e.target.value);
-        } else {
-          setEmail(e.target.value);
-        }
-      }
-
+  function handleChange(e) {
+    console.log(e.target.value);
+    if (e.target.name === "user") {
+      setUsername(e.target.value);
+    } else if (e.target.name === "password") {
+      setPassword(e.target.value);
+    } else {
+      setEmail(e.target.value);
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -110,7 +114,7 @@ export default function SignInSide() {
               sx={{ mt: 1 }}
             >
               <TextField
-              onChange={handleChange}
+                onChange={handleChange}
                 margin="normal"
                 required
                 fullWidth
@@ -121,7 +125,7 @@ export default function SignInSide() {
                 autoFocus
               />
               <TextField
-              onChange={handleChange}
+                onChange={handleChange}
                 margin="normal"
                 required
                 fullWidth
@@ -132,7 +136,7 @@ export default function SignInSide() {
                 autoFocus
               />
               <TextField
-              onChange={handleChange}
+                onChange={handleChange}
                 margin="normal"
                 required
                 fullWidth
@@ -168,7 +172,10 @@ export default function SignInSide() {
               </Grid>
               <Copyright sx={{ mt: 5 }} />
               <AvatarGroup>
-                <Avatar alt="Robert" src="../images/avatar/20200922_171011.jpg" />
+                <Avatar
+                  alt="Robert"
+                  src="../images/avatar/20200922_171011.jpg"
+                />
                 <Avatar alt="Beniah" src="/static/images/avatar/2.jpg" />
               </AvatarGroup>
             </Box>
@@ -178,21 +185,3 @@ export default function SignInSide() {
     </ThemeProvider>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

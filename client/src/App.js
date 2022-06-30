@@ -19,6 +19,7 @@ import PostJob from "./components/PostJob";
 import EmployerProfile from "./components/EmployerProfile";
 
 import FavouriteJobs from "./components/FavouriteJobs";
+import UpdateJob from "./components/UpdateJob";
 
 function App() {
   return (
@@ -42,10 +43,17 @@ function App() {
           />
           <Route path="/signup" element={<UserSignupMaterial />} />
           <Route path="/user/login" element={<UserLoginMaterial />} />
-          <Route path="/beers" element={<PrivateRoute></PrivateRoute>} />
           <Route
-            path="/bars/:barId"
-            element={<PrivateRoute>{/* <BarDetailsPage /> */}</PrivateRoute>}
+            path="/updatejob/:jobId"
+            element={
+              <PrivateRoute>
+                <UpdateJob />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/job/delete/:jobId"
+            element={<PrivateRoute>{<UpdateJob />}</PrivateRoute>}
           />
           <Route path="*" element={<ErrorPage />} />
         </Routes>

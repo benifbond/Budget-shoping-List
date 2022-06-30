@@ -14,6 +14,7 @@ const saltRounds = 10;
 // Require the User model in order to interact with the database
 const Job = require("../models/Job.model");
 const Employer = require("../models/Employer.model");
+const { findByIdAndUpdate } = require("../models/Employer.model");
 
 router.post("/employer/signup", (req, res) => {
   const { password, email, name } = req.body;
@@ -137,6 +138,25 @@ router.get("/jobs", async (req, res) => {
   const jobOffers = await Job.find();
   res.status(200).json({ jobOffers });
   console.log(jobOffers);
+});
+
+router.get("/jobs/:jobId", async (req, res) => {
+  console.log("here is update", req.params);
+  const { jobId } = req.params;
+  let updatejob = await Job.findById(jobId);
+  console.log("here is the updated jobs", updatejob);
+  res.status(200).json(updatejob);
+});
+
+router.put("/updatejob/:jobId", async (req, res) => {
+  const updateJob = await Job.findByIdAndUpdate(req.params.jobId, req.body);
+  console.log("new update", updateJob);
+  res.status(200).json(updateJob);
+});
+
+router.delete("/job/delete/:jobId", async (req, res) => {
+  const deleteJob = await Job.findByIdAndDelete(req.params.jobId);
+  res.status(200).json(deleteJob);
 });
 
 ///////////////////////Cloudinary setup//////////////////////

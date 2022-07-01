@@ -1,7 +1,7 @@
 import { BASE_API_URL } from "./constants";
 
 export const fetchData = async (setter) => {
-  const response = await fetch("http://localhost:5005/api/jobs");
+  const response = await fetch(`${BASE_API_URL}/api/jobs`);
   const parsed = await response.json();
   setter(parsed);
 };

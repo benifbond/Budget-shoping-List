@@ -72,43 +72,53 @@ function EmployerProfile() {
       .catch((err) => console.log(err));
   };
 
+  function navigatePost() {
+    navigate("/postJob");
+  }
   return (
     <div>
-      <Link to="/postJob"> Post Job </Link>
-
       <React.Fragment>
         {jobs &&
           jobs.map((job) => {
             return (
-              <Container maxWidth="sm" key={job._id}>
-                <Card sx={{ maxWidth: "100vw", display: "grid" }}>
+              <Container
+                maxWidth="sm"
+                key={job._id}
+                direction="row"
+                spacing={6}
+                margin="auto"
+              >
+                <Card sx={{ maxWidth: "100vw" }}>
                   <div>
-                    <h3>{job.title}</h3>
+                    <h2>{job.title}</h2>
                   </div>
-                  <div> {job.description}</div>
+                  <div>
+                    <h4> {job.description}</h4>
+                  </div>
                   <div>
                     <p>{job.location}</p>
-                    <div>{job.salary}</div>
+                    <div>
+                      <i>€{job.salary}</i>
+                    </div>
                   </div>
-
-                  <Stack direction="row" spacing={2}>
-                    <Button
-                      variant="outlined"
-                      startIcon={<DeleteIcon />}
-                      onClick={() => deleteJob(job._id)}
-                    >
-                      Delete
-                    </Button>
-                    <Button
-                      variant="contained"
-                      endIcon={<SendIcon />}
-                      onClick={() => navigate(`/updatejob/${job._id}`)}
-                    >
-                      Update
-                    </Button>
-                  </Stack>
-
-                  {/* <Link to={`/updatejob/${job._id}`}> update job</Link> */}
+                  <div>
+                    <Stack direction="row" spacing={"auto"}>
+                      <Button
+                        variant="outlined"
+                        startIcon={<DeleteIcon />}
+                        onClick={() => deleteJob(job._id)}
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        variant="contained"
+                        endIcon={<SendIcon />}
+                        onClick={() => navigate(`/updatejob/${job._id}`)}
+                      >
+                        Update
+                      </Button>
+                    </Stack>
+                  </div>
                 </Card>
               </Container>
             );
@@ -116,6 +126,7 @@ function EmployerProfile() {
       </React.Fragment>
 
       <Button>logout</Button>
+      <Button onClick={() => navigatePost()}> Post</Button>
     </div>
   );
 }

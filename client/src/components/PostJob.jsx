@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
-import { Button } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 const PostJob = () => {
@@ -38,53 +38,113 @@ const PostJob = () => {
   }
 
   return (
-    <div>
-      <form
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
-      >
-        <div>
-          <input
-            name="title"
-            type="text"
-            placeholder="job title"
-            required
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <input
-            name="salary"
-            type="number"
-            label="€"
-            placeholder="price"
-            required
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <input
-            name="location"
-            type="text"
-            placeholder="job location"
-            required
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <textArea
-            name="description"
-            type="text"
-            placeholder="Description"
-            required
-            onChange={handleChange}
-          />
-        </div>
+    //   <div>
+    //     <form
+    //       onSubmit={(e) => {
+    //         handleSubmit(e);
+    //       }}
+    //     >
+    //       <div>
+    //         <input
+    //           name="title"
+    //           type="text"
+    //           placeholder="job title"
+    //           required
+    //           onChange={handleChange}
+    //         />
+    //       </div>
+    //       <div>
+    //         <input
+    //           name="salary"
+    //           type="number"
+    //           label="€"
+    //           placeholder="price"
+    //           required
+    //           onChange={handleChange}
+    //         />
+    //       </div>
+    //       <div>
+    //         <input
+    //           name="location"
+    //           type="text"
+    //           placeholder="job location"
+    //           required
+    //           onChange={handleChange}
+    //         />
+    //       </div>
+    //       <div>
+    //         <textArea
+    //           name="description"
+    //           type="text"
+    //           placeholder="Description"
+    //           required
+    //           onChange={handleChange}
+    //         />
+    //       </div>
 
-        <button>post</button>
-      </form>
-    </div>
+    //       <button>post</button>
+    //     </form>
+    //   </div>
+    // );
+
+    <Box
+      onSubmit={(e) => {
+        handleSubmit(e);
+      }}
+      component="form"
+      sx={{
+        "& .MuiTextField-root": { m: 1, width: "50ch" },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div>
+        <TextField
+          name="title"
+          type="text"
+          label="Job title"
+          onChange={handleChange}
+          id="outlined-required"
+          required
+        />
+      </div>
+      <div>
+        <TextField
+          name="salary"
+          type="number"
+          label="Salary (EUR)"
+          id="outlined-required"
+          required
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <TextField
+          name="location"
+          type="text"
+          label="Job.location"
+          required
+          onChange={handleChange}
+        />
+      </div>
+
+      <div>
+        <TextField
+          id="outlined-multiline-static"
+          label="Description"
+          multiline
+          rows={5}
+          name="description"
+          type="text"
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <Button variant="contained" endIcon={<SendIcon />} type="submit">
+        Post
+      </Button>
+    </Box>
   );
 };
 

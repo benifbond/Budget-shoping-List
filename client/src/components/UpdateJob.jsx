@@ -5,6 +5,8 @@ import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
 export default function UpdateJob() {
   const [title, setTitle] = useState("");
@@ -56,56 +58,67 @@ export default function UpdateJob() {
   }
 
   return (
-    <form
+    <Box
       onSubmit={(e) => {
         handleSubmit(e);
       }}
+      component="form"
+      sx={{
+        "& .MuiTextField-root": { m: 1, width: "50ch" },
+      }}
+      noValidate
+      autoComplete="off"
     >
       <div>
-        <input
+        <TextField
           name="title"
           type="text"
-          placeholder="job title"
+          label="Job title"
           value={title}
-          required
           onChange={handleChange}
+          id="outlined-required"
+          required
         />
       </div>
       <div>
-        <input
+        <TextField
           name="salary"
           type="number"
           value={salary}
-          label="€"
-          placeholder="price"
+          label="Salary (EUR)"
+          id="outlined-required"
           required
           onChange={handleChange}
         />
       </div>
       <div>
-        <input
+        <TextField
           name="location"
           type="text"
           value={location}
-          placeholder="job.location"
+          label="Job.location"
           required
           onChange={handleChange}
         />
       </div>
+
       <div>
-        <input
+        <TextField
+          id="outlined-multiline-static"
+          label="Description"
+          multiline
+          rows={5}
           name="description"
           type="text"
-          placeholder="Description"
           value={description}
-          required
           onChange={handleChange}
+          required
         />
       </div>
 
       <Button variant="contained" endIcon={<SendIcon />} type="submit">
         Update
       </Button>
-    </form>
+    </Box>
   );
 }

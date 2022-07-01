@@ -17,7 +17,7 @@ const Employer = require("../models/Employer.model");
 const { findByIdAndUpdate } = require("../models/Employer.model");
 
 router.post("/employer/signup", (req, res) => {
-  const { password, email, name } = req.body;
+  const { password, email, username } = req.body;
   console.log("here is employer signup", req.body);
   if (!email) {
     return res
@@ -40,12 +40,15 @@ router.post("/employer/signup", (req, res) => {
         // Create a user and save it in the database
         return Employer.create({
           email,
-          username: name,
+          username: username,
 
           password: hashedPassword,
-        });
+        }).then((employer)=>{
+res.status(200).json(employer)
+        })
       })
       .catch((error) => {
+        console.log(error)
         if (error instanceof mongoose.Error.ValidationError) {
           return res.status(400).json({ errorMessage: error.message });
         }
@@ -63,7 +66,7 @@ router.post("/employer/signup", (req, res) => {
 //<<<<<<<<<<<<<<<<<<L O G I N >>>>>>>>>>>>>>>>>
 
 router.post("/employer/login", (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
 
   if (!email) {
     return res

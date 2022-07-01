@@ -48,7 +48,7 @@ export default function SignInSide() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const submitUser = await axios.post(`${BASE_API_URL}/auth/login`, {username, email, password});
+    const submitUser = await axios.post(`${BASE_API_URL}/api/employer/login`, {username, email, password});
     console.log(submitUser.data);
     authenticateUser(submitUser.data.authToken);
     navigate("/employer/profile");

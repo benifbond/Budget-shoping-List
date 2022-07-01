@@ -57,7 +57,7 @@ export default function SignInSide() {
       newUser
     );
     console.log(submitUser.data);
-    navigate("/employer/profile");
+    navigate("/employer/login");
   };
 
   function handleChange(e) {
